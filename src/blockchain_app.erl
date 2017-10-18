@@ -38,12 +38,12 @@ setup_cowboy() ->
 	Dispatch = cowboy_router:compile([
 									  {'_', [                                                                       %% Hostname fuer den die Routen gelten
 												{"/", cowboy_static, {priv_file, blockchain, "index.html"}},            
-%% 												{"/client", ws_handler, []},            %% /websocket wird von dem Modul ws_handler ausgeliefert
+ 												{"/client", ws_handler, []},            %% /websocket wird von dem Modul ws_handler ausgeliefert
 												{"/static/[...]", cowboy_static, {priv_dir, blockchain, "static"}},
 												{"/css/[...]", cowboy_static, {priv_dir, blockchain, "css"}}
 											]}
 									 ]),
-	{ok, _} = cowboy:start_http(http, 100, [{port, 5551}], [{env, [{dispatch, Dispatch}]}]),                        %% HTTP-Server starten
+	{ok, _} = cowboy:start_clear(http, [{port, 5555}], [{env, [{dispatch, Dispatch}]}]),                        %% HTTP-Server starten
 	ok.
 
 setup_mnesia() ->
