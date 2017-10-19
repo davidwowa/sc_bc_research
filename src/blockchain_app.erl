@@ -1,5 +1,8 @@
 %%%-------------------------------------------------------------------
+%% @title Welcome to the `blockchain' application!
 %% @doc blockchain public API
+%% @author Wladimir David Zakrevskyy <dmcvic@web.de>
+%% @version 17.0.1
 %% @end
 %%%-------------------------------------------------------------------
 
@@ -36,14 +39,15 @@ stop(_State) ->
 setup_cowboy() ->
 	lager:info("setup cowboy server"),
 	Dispatch = cowboy_router:compile([
-									  {'_', [                                                                       %% Hostname fuer den die Routen gelten
+									  {'_', [                                                                       
 												{"/", cowboy_static, {priv_file, blockchain, "index.html"}},            
- 												{"/client", ws_handler, []},            %% /websocket wird von dem Modul ws_handler ausgeliefert
+ 												{"/client", ws_handler, []},
 												{"/static/[...]", cowboy_static, {priv_dir, blockchain, "static"}},
 												{"/css/[...]", cowboy_static, {priv_dir, blockchain, "css"}}
 											]}
 									 ]),
-	{ok, _} = cowboy:start_clear(http, [{port, 5555}], [{env, [{dispatch, Dispatch}]}]),                        %% HTTP-Server starten
+	{ok, _} = cowboy:start_clear(http, [{port, 5555}], #{env => #{dispatch => Dispatch}
+	}),
 	ok.
 
 setup_mnesia() ->
@@ -65,7 +69,7 @@ install_mnesia_tables() ->
 	mnesia:create_schema([node()]),
 	lager:info("mnesia start"),
 	ok = mnesia:start(),
-	mnesia:create_table(client,                                         %% Dann werden Tabellen angelegt
+	mnesia:create_table(client,
 						[{attributes, record_info(fields, client)},
 						 {ram_copies, [node()]}]),
 	ok.
