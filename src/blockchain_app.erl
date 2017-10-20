@@ -1,5 +1,4 @@
 %%%-------------------------------------------------------------------
-%% @title Welcome to the `blockchain' application!
 %% @doc blockchain public API
 %% @author Wladimir David Zakrevskyy <dmcvic@web.de>
 %% @version 17.0.1
