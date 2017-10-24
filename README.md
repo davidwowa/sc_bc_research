@@ -1,14 +1,17 @@
-erlang blockchain by Wladimir David Zakrevskyy
+#erlang blockchain by Wladimir David Zakrevskyy
 =====
 
 An OTP application
 
-Install
+##Install
 ----
 	$ ./install.sh
-Run
+##Run
 ----
 	$ ./clean_compile_run.sh
-Build
+##Build
 -----
 	$ ./build_release.sh
+
+#Why Erlang
+[Why Erlang?](https://www.infoq.com/presentations/erlang-java-scala-go-c)
