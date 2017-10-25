@@ -18,4 +18,8 @@ _build
 rebar3.crashdump
 /rebar.lock
 /rebar3
+<<<<<<< HEAD
 /tmp/
+=======
+/doc/
+>>>>>>> branch 'master' of https://bitbucket.org/wowa_/bc
