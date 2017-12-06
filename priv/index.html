@@ -2,22 +2,39 @@
 
 <html>
 <head>
-<meta charset="UTF-8">
-<link href="css/title.css" rel="stylesheet" type="text/css" />
+	<meta charset="UTF-8">
+	<link href="css/title.css" rel="stylesheet" type="text/css" />
+	<link href="css/log.css" rel="stylesheet" type="text/css" />
+	<link href="css/root.css" rel="stylesheet" type="text/css" />
+	<link href="css/menu.css" rel="stylesheet" type="text/css" />
 
-<title>Client Status</title>
+	<title>Node Status</title>
 </head>
 
-<body>
-	<div id="header">
-		<div class="title">Client Status</div>
-		<div id="status"></div>
-	</div>
+<body class="root">
+	<ul class="menu">
+		<li><a class="active" href="#home">Home</a></li>
+		<li><a href="#my_projects">My Projects</a></li>
+		<li><a href="#my_contracts">My Contracts</a></li>
+		<li><a href="#my_actions">Actions</a></li>
+		<li><a href="#contact">Contact</a></li>
+		<li><a href="#about">About</a></li>
+		<li><a href="#help">Help</a></li>
+	</ul>
+
+	<div style="padding:20px;margin-top:30px;height:1500px;"/>
+
+		<div id="header">
+			<div class="title">Node status</div>
+			<div id="status"></div>
+		</div>
+
 
 	<div class="log">LOG</div>
-	<div id="log"></div>
+
+	<div class="log" id="log"></div>
+
 	<script type="text/javascript" src="static/js.js">
-		
 	</script>
 </body>
 </html>
