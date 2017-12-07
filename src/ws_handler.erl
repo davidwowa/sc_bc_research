@@ -20,6 +20,7 @@ websocket_init(_TransportName, Req, _Opts) ->
 %% Behandelt eingehende Text-Nachrichten des Websockets
 websocket_handle({text, Msg}, Req, State) ->
 	lager:info("incomming message : ~p", [Msg]),
+	bc_utils:generate_key_paar(),
 	{ok, Req, State};
 websocket_handle(_Data, Req, State) ->
 	{ok, Req, State}.
