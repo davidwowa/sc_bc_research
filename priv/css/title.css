@@ -1,9 +1,9 @@
 .title {
+	color: #00ce08;
 	text-align: center;
 	text-shadow: 3px 2px red;
 	border: 1px solid #000;
-	background-color: #d1ccd0;
-	font-size: 100px;
+	font-size: 50px;
 	text-transform: uppercase;
 	font-family: 'Courier New', Courier, 'Lucida Sans Typewriter',
 		'Lucida Typewriter';
