@@ -1,1 +1,1 @@
--record(client, {pid, uuid, ip}).
+-record(client, {pid, guid, ip, address}).

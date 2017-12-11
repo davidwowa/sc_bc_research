@@ -6,3 +6,35 @@
     font-family: 'Courier New', Courier, 'Lucida Sans Typewriter',
     'Lucida Typewriter';
 }
+
+.log_info {
+    color: #00ce08;
+    background-color: #000000;
+    font-size: 10px;
+    font-family: 'Courier New', Courier, 'Lucida Sans Typewriter',
+    'Lucida Typewriter';
+}
+
+.log_error {
+    color: #ff1e00;
+    background-color: #000000;
+    font-size: 10px;
+    font-family: 'Courier New', Courier, 'Lucida Sans Typewriter',
+    'Lucida Typewriter';
+}
+
+.log_debug {
+    color: #00bfff;
+    background-color: #000000;
+    font-size: 10px;
+    font-family: 'Courier New', Courier, 'Lucida Sans Typewriter',
+    'Lucida Typewriter';
+}
+
+.log_trace {
+    color: #fff900;
+    background-color: #000000;
+    font-size: 10px;
+    font-family: 'Courier New', Courier, 'Lucida Sans Typewriter',
+    'Lucida Typewriter';
+}
