@@ -1,5 +1,5 @@
 "use strict";
-var socket = new WebSocket("ws://localhost:5555/ws");
+var socket = new WebSocket("ws://localhost:5555/websocket");
 
 var my_gid = guid();
 var my_cookie = "guid=" + my_gid;
@@ -8,31 +8,31 @@ var my_cookie = "guid=" + my_gid;
 
 function home(ce) {
     log_this("user clicked " + ce, 0);
-};
+}
 
 function my_projects(ce) {
     log_this("user clicked " + ce, 0);
-};
+}
 
 function my_contracts(ce) {
     log_this("user clicked " + ce, 0);
-};
+}
 
 function my_actions(ce) {
     log_this("user clicked " + ce, 0);
-};
+}
 
 function contact(ce) {
     log_this("user clicked " + ce, 0);
-};
+}
 
 function about(ce) {
     log_this("user clicked " + ce, 0);
-};
+}
 
 function help(ce) {
     log_this("user clicked " + ce, 0);
-};
+}
 
 
 // websocket
@@ -46,9 +46,14 @@ function init() {
     }
     // set inital data
     document.getElementById("identity").innerHTML = my_gid;
-};
+}
 
 init();
+
+function ws_send(data_to_send) {
+    log_this("send message over websocket " + data_to_send, 0);
+    socket.send(data_to_send);
+}
 
 socket.onopen = function () {
     log_this("websockets connection ok", 0);
@@ -62,7 +67,7 @@ socket.onmessage = function (messageEvent) {
 
 // callback-Funktion wird gerufen, wenn eine Fehler auftritt
 socket.onerror = function (errorEvent) {
-    log_this("error! connection lost", 1);
+    log_this("error! connection lost" + errorEvent, 1);
 };
 
 socket.onclose = function (closeEvent) {
@@ -76,7 +81,6 @@ function guid() {
         return Math.floor((1 + Math.random()) * 0x10000).toString(16)
             .substring(1);
     }
-
     return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4()
         + s4() + s4();
 }
@@ -114,4 +118,10 @@ function test(ce) {
     log_this("test_debug_log", 2);
     log_this("test_trace_log", 3);
     log_this("generate test guid " + guid(), 0);
+
+    ws_test_send();
+}
+
+function ws_test_send() {
+    ws_send("send test data");
 }

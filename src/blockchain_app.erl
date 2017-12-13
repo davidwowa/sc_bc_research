@@ -19,7 +19,7 @@
 %%====================================================================
 
 start(_StartType, _StartArgs) ->
-%% 	lager:start(),
+  lager:start(),
   {ok, _Apps1} = application:ensure_all_started(lager),
   {ok, _Apps2} = application:ensure_all_started(ranch),
   lager:info("CLIENT: ~p", [self()]),
@@ -37,16 +37,19 @@ stop(_State) ->
 
 setup_cowboy() ->
   lager:info("setup cowboy server"),
+  lager:info("configure routing"),
   Dispatch = cowboy_router:compile([
     {'_', [
       {"/", cowboy_static, {priv_file, blockchain, "index.html"}},
-      {"/ws", ws_handler, []},
+      {"/websocket", ws_handler, []},
       {"/static/[...]", cowboy_static, {priv_dir, blockchain, "static"}},
       {"/css/[...]", cowboy_static, {priv_dir, blockchain, "css"}}
     ]}
   ]),
+  lager:info("start http handler, port 5555"),
   {ok, _} = cowboy:start_clear(http, [{port, 5555}], #{env => #{dispatch => Dispatch}
   }),
+  lager:info("setup server OK!"),
   ok.
 
 setup_mnesia() ->
@@ -59,8 +62,10 @@ setup_mnesia() ->
     _ ->
       lager:info("mnesia stop"),
       mnesia:stop(),
-      ok = install_mnesia_tables()
+      ok = install_mnesia_tables(),
+      lager:info("tables are installed")
   end,
+  lager:info("setup mnesia OK!"),
   ok.
 
 install_mnesia_tables() ->

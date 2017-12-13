@@ -1,16 +1,21 @@
 {application, blockchain,
- [{description, "An OTP application"},
-  {vsn, "0.1.0"},
-  {registered, []},
-  {mod, { blockchain_app, []}},
-  {applications,
-   [kernel,
-    stdlib
-   ]},
-  {env,[]},
-  {modules, []},
+  [{description, "An OTP application"},
+    {vsn, "0.1.0"},
+    {registered, []},
+    {mod, {blockchain_app, []}},
+    {applications,
+      [kernel,
+        stdlib,
+        crypto,
+        cowboy,
+        compiler,
+        lager,
+        syntax_tools
+      ]},
+    {env, []},
+    {modules, []},
 
-  {maintainers, []},
-  {licenses, ["Apache 2.0"]},
-  {links, []}
- ]}.
+    {maintainers, []},
+    {licenses, ["Apache 2.0"]},
+    {links, []}
+  ]}.
