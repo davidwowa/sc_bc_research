@@ -10,7 +10,8 @@
         cowboy,
         compiler,
         lager,
-        syntax_tools
+        syntax_tools,
+        sync
       ]},
     {env, []},
     {modules, []},

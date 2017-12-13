@@ -22,6 +22,7 @@ start(_StartType, _StartArgs) ->
   lager:start(),
   {ok, _Apps1} = application:ensure_all_started(lager),
   {ok, _Apps2} = application:ensure_all_started(ranch),
+  application:start(sync),
   lager:info("CLIENT: ~p", [self()]),
   ok = setup_mnesia(),
   ok = setup_cowboy(),
