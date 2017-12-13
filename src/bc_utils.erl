@@ -37,6 +37,7 @@ list_to_hex(L) ->
 
 int_to_hex(N) when N < 512 ->
   [hex(N div 16), hex(N rem 16)].
+
 hex(N) when N < 10 ->
   $0+N;
 hex(N) when N >= 10, N < 16 ->
