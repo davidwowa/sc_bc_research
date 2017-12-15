@@ -13,6 +13,9 @@ echo "remove _build folder"
 sudo rm -r _build
 rm rebar.lock
 
+echo "rebar auto"
+~/git/rebar3/rebar3 auto
+
 #printf "%*s\n" $(((${#c1}+$COLUMNS)/2)) "$c1"
 echo "clean"
 ~/git/rebar3/rebar3 clean

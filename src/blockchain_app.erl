@@ -30,6 +30,7 @@ start(_StartType, _StartArgs) ->
 
 %%--------------------------------------------------------------------
 stop(_State) ->
+  lager:info("stop application blockchain"),
   ok.
 
 %%====================================================================
@@ -41,6 +42,7 @@ setup_cowboy() ->
   lager:info("configure routing"),
   Dispatch = cowboy_router:compile([
     {'_', [
+%%      {'_', http_handler, []},
       {"/", cowboy_static, {priv_file, blockchain, "index.html"}},
       {"/websocket", ws_handler, []},
       {"/static/[...]", cowboy_static, {priv_dir, blockchain, "static"}},
@@ -48,9 +50,9 @@ setup_cowboy() ->
     ]}
   ]),
   lager:info("start http handler, port 5555"),
-  {ok, _} = cowboy:start_clear(http, [{port, 5555}], #{env => #{dispatch => Dispatch}
-  }),
+  {ok, _} = cowboy:start_clear(ssl, [{port, 5555}], #{env => #{dispatch => Dispatch}}),
   lager:info("setup server OK!"),
+  %%websocket_sup:start_link(),
   ok.
 
 setup_mnesia() ->

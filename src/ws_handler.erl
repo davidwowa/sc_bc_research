@@ -1,5 +1,7 @@
 -module(ws_handler).
 
+-include("client.hrl").
+
 -export([init/2, terminate/3]).
 -export([websocket_init/1]).
 -export([websocket_handle/2]).
@@ -12,8 +14,9 @@ init(Req, Opts) ->
 
 websocket_init(State) ->
   lager:info("init websockets"),
-  erlang:start_timer(1000, self(), <<"websocket initialized">>),
-  {HashedPublicKey, HashedPrivateKey} = bc_utils:generate_key_paar(),
+  {PublicKey, _PrivKeyOut} = crypto_utils:generate_key_paar(),
+  Hash = hash_utils:make_hash_from(PublicKey),
+  erlang:start_timer(1000, self(), Hash),
   {ok, State}.
 
 %% receive
