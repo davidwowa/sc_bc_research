@@ -1,15 +1,18 @@
-#erlang blockchain by Wladimir David Zakrevskyy
+Erlang blockchain by Wladimir David Zakrevskyy
 =====
 An OTP application
-##Install
-----
+Install
+---
 	$ ./install.sh
-##Run
-----
+---
+Run
+---
 	$ ./clean_compile_run.sh
-##Build
------
+---
+Build
+---
 	$ ./build_release.sh
+---
 #Why Erlang
 [Why Erlang?](https://www.infoq.com/presentations/erlang-java-scala-go-c)  
 [WebPages with Chicago Boss](https://github.com/ChicagoBoss/ChicagoBoss/wiki/Quickstart)  
@@ -25,3 +28,14 @@ Yet no solution available!!
 
 #For me
 [Erlang Book Author Blog](https://ferd.ca/)  
+
+#Byte and Bit Calculation
+```
+%% bits
+8 = bit_size(<<12>>).
+16 = bit_size(<<0, 12>>).
+...
+%% bytes
+3 = byte_size(<<0, 123, 2342323423423>>).
+
+```

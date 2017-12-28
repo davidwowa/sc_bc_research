@@ -1,4 +1,4 @@
 @ECHO ON
-SET PATH="C:\Program Files\erl9.1\bin"
+SET PATH="C:\Program Files\erl9.2\bin"
 
-C:\Users\wdzak\IdeaProjects\bc>"C:\Program Files\erl9.1\bin\escript.exe" C:\Users\wdzak\git\rebar3\rebar3 run
+"C:\Program Files\erl9.2\bin\escript.exe" C:\Users\wdzak\git\rebar3\rebar3 run
