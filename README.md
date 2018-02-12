@@ -26,6 +26,11 @@ Yet no solution available!!
 2. Application start in windows
 3. Websockets connection
 
+#Docker
+---
+    docker build --build-arg password=pass --no-cache=true -t debian:erlang1 .
+---
+
 #For me
 [Erlang Book Author Blog](https://ferd.ca/)  
 
