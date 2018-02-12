@@ -11,11 +11,11 @@ RUN git clone https://github.com/erlang/rebar3 && cd rebar3 && ./bootstrap
 ARG password
 RUN git clone https://wowa_:$password@bitbucket.org/wowa_/bc.git
 
-RUN mkdir /app/bc
-ADD . /app/bc
+#RUN mkdir /app/bc
+#ADD . /app/bc
 
-RUN sed -i -e 's/\r$//' /app/bc/clean_compile_run.sh
-RUN chmod +x /app/bc/clean_compile_run.sh
-RUN /app/bc/clean_compile_run.sh
+#RUN sed -i -e 's/\r$//' /app/bc/clean_compile_run.sh
+RUN chmod +x /bc/clean_compile_run.sh
+RUN /bc/clean_compile_run.sh
 
 EXPOSE 5555
