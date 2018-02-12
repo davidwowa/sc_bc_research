@@ -1,12 +1,14 @@
 FROM debian
 
+MAINTAINER David Zakrevsky "dmcvic@qweb.de"
+
 RUN apt-get update
 RUN apt-get -y install git
 RUN apt-get -y install erlang
 RUN apt-get -y install build-essential
 
 RUN mkdir app
-RUN git clone https://github.com/erlang/rebar3 && cd rebar3 && ./bootstrap
+RUN git clone https://github.com/erlang/rebar3 && cd rebar3 && ./bootstrap && rebar3 local install
 
 ARG password
 RUN git clone https://wowa_:$password@bitbucket.org/wowa_/bc.git
