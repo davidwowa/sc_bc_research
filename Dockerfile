@@ -8,7 +8,7 @@ RUN apt-get -y install erlang
 RUN apt-get -y install build-essential
 
 RUN mkdir app
-RUN git clone https://github.com/erlang/rebar3 && cd rebar3 && ./bootstrap && cd default/bin && rebar3 local install
+RUN git clone https://github.com/erlang/rebar3 && cd /rebar3 && ./bootstrap && cd /rebar3/default/bin && ./rebar3 local install
 
 ARG password
 RUN git clone https://wowa_:$password@bitbucket.org/wowa_/bc.git
