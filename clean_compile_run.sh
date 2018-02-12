@@ -10,7 +10,7 @@
 
 #printf "%*s\n" $(((${#c0}+$COLUMNS)/2)) "$c0"
 echo "remove _build folder"
-sudo rm -r _build
+rm -r _build
 rm rebar.lock
 
 echo "rebar update"
@@ -23,7 +23,7 @@ echo "rebar auto"
 
 #printf "%*s\n" $(((${#c1}+$COLUMNS)/2)) "$c1"
 echo "clean"
-/rebar3/_build/default/bin/rebar3 clean
+/rebar3/_build/default/bin/rebar3 clean -a
 #~/git/rebar3/rebar3 clean
 #~/.cache/rebar3/bin/rebar3 clean
 
