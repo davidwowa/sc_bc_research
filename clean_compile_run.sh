@@ -13,19 +13,19 @@ echo "remove _build folder"
 rm -r _build
 rm rebar.lock
 
-echo "rebar update"
-/rebar3/_build/default/bin/rebar3 update
-#~/git/rebar3/rebar3 update
-
-echo "rebar auto"
-/rebar3/_build/default/bin/rebar3 auto
-#~/git/rebar3/rebar3 auto
-
 #printf "%*s\n" $(((${#c1}+$COLUMNS)/2)) "$c1"
-echo "clean"
-/rebar3/_build/default/bin/rebar3 clean -a
+#echo "clean"
+#/rebar3/_build/default/bin/rebar3 clean -a
 #~/git/rebar3/rebar3 clean
 #~/.cache/rebar3/bin/rebar3 clean
+
+#echo "rebar update"
+#/rebar3/_build/default/bin/rebar3 update
+#~/git/rebar3/rebar3 update
+
+#echo "rebar auto"
+#/rebar3/_build/default/bin/rebar3 auto
+#~/git/rebar3/rebar3 auto
 
 #printf "%*s\n" $(((${#c2}+$COLUMNS)/2)) "$c2"
 echo "compile"
