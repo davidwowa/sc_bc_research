@@ -21,7 +21,8 @@ GUI Programming with wxErlang
 #Current problems
 1. rebar3 integration in windows  
 [Github Issue new](https://github.com/erlang/rebar3/pull/1689)  
-[Github Issue old](https://github.com/erlang/rebar3/issues/850)  
+[Github Issue old](https://github.com/erlang/rebar3/issues/850)
+[Github Issue Docker](https://github.com/erlang/rebar3/issues/1255)    
 Yet no solution available!!
 2. Application start in windows
 3. Websockets connection
