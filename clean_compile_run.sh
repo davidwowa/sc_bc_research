@@ -14,33 +14,33 @@ sudo rm -r _build
 rm rebar.lock
 
 echo "rebar update"
-rebar3 update
+/rebar3/_build/default/bin/rebar3 update
 #~/git/rebar3/rebar3 update
 
 echo "rebar auto"
-rebar3 auto
+/rebar3/_build/default/bin/rebar3 auto
 #~/git/rebar3/rebar3 auto
 
 #printf "%*s\n" $(((${#c1}+$COLUMNS)/2)) "$c1"
 echo "clean"
-rebar3 clean
+/rebar3/_build/default/bin/rebar3 clean
 #~/git/rebar3/rebar3 clean
 #~/.cache/rebar3/bin/rebar3 clean
 
 #printf "%*s\n" $(((${#c2}+$COLUMNS)/2)) "$c2"
 echo "compile"
-rebar3 compile
+/rebar3/_build/default/bin/rebar3 compile
 #~/git/rebar3/rebar3 compile
 #~/.cache/rebar3/bin/rebar3 compile
 
 #printf "%*s\n" $(((${#c3}+$COLUMNS)/2)) "$c3"
 echo "tree"
-rebar3 tree
+/rebar3/_build/default/bin/rebar3 tree
 #~/git/rebar3/rebar3 tree
 #~/.cache/rebar3/bin/rebar3 tree
 
 echo "run"
-rebar3 run
+/rebar3/_build/default/bin/rebar3 run
 #~/git/rebar3/rebar3 run
 #~/.cache/rebar3/bin/rebar3 run
 
