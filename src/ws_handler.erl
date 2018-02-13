@@ -15,6 +15,7 @@ init(Req, Opts) ->
 websocket_init(State) ->
   lager:info("init websockets"),
   {PublicKey, _PrivKeyOut} = crypto_utils:generate_key_paar(),
+  db_utils:test_mysql(),
   Hash = hash_utils:make_hash_from(PublicKey),
   erlang:start_timer(1000, self(), Hash),
   {ok, State}.

@@ -13,6 +13,13 @@
 
 %% API
 -export([save_client/3]).
+-export([test_mysql/0]).
+
+test_mysql() ->
+  lager:info("chk db conn"),
+  {ok, Pid} = mysql:start_link([{host, "localhost"}, {user, "foo"},
+    {password, "hello"}, {database, "test"}]),
+  lager:info("chk db conn end").
 
 save_client(GUID, Ip, Address) ->
   lager:info("create new client"),
