@@ -17,8 +17,8 @@
 
 test_mysql() ->
   lager:info("chk db conn"),
-  {ok, Pid} = mysql:start_link([{host, "localhost"}, {user, "foo"},
-    {password, "hello"}, {database, "test"}]),
+  {ok, Pid} = mysql:start_link([{host, "localhost"}, {user, "test"},
+    {password, "test"}, {database, "test"}]),
   lager:info("chk db conn end").
 
 save_client(GUID, Ip, Address) ->
