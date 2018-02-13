@@ -20,4 +20,4 @@ RUN git clone https://wowa_:$password@bitbucket.org/wowa_/bc.git
 RUN chmod +x /bc/clean_compile_run.sh
 CMD /bc/clean_compile_run.sh
 
-EXPOSE 5555:5555
+EXPOSE 5555 5555
