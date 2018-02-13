@@ -15,11 +15,11 @@ rm rebar.lock
 #echo "rebar auto"
 #/rebar3/_build/default/bin/rebar3 auto
 
-echo "compile"
-/rebar3/_build/default/bin/rebar3 compile
+#echo "compile"
+#/rebar3/_build/default/bin/rebar3 compile
 
-echo "tree"
-/rebar3/_build/default/bin/rebar3 tree
+#echo "tree"
+#/rebar3/_build/default/bin/rebar3 tree
 
 echo "run"
 /rebar3/_build/default/bin/rebar3 run
