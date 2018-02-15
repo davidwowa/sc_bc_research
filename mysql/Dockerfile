@@ -1,23 +1,17 @@
-FROM debian
+FROM ubuntu
 
-MAINTAINER David Zakrevskyy "dmcvic@qweb.de"
+RUN dpkg-divert --local --rename --add /sbin/initctl
+RUN ln -s /bin/true /sbin/initctl
 
+RUN echo "deb http://archive.ubuntu.com/ubuntu precise main universe" > /etc/apt/sources.list
 RUN apt-get update
-RUN apt-get -y install git
-RUN apt-get -y install erlang
-RUN apt-get -y install build-essential
 
-RUN mkdir app
-RUN git clone https://github.com/erlang/rebar3 && cd /rebar3 && ./bootstrap && cd /rebar3/_build/default/bin && ./rebar3 local install && chmod a+x /rebar3/_build/default/bin/rebar3
+RUN apt-get -y install mysql-client mysql-server
 
-ARG password
-RUN git clone https://wowa_:$password@bitbucket.org/wowa_/bc.git
+RUN sed -i -e"s/^bind-address\s*=\s*127.0.0.1/bind-address = 0.0.0.0/" /etc/mysql/my.cnf
 
-#RUN mkdir /app/bc
-#ADD . /app/bc
+ADD ./startup.sh /opt/startup.sh
 
-#RUN sed -i -e 's/\r$//' /app/bc/clean_compile_run.sh
-RUN chmod +x /bc/clean_compile_run.sh
-CMD /bc/clean_compile_run.sh
+EXPOSE 3306
 
-EXPOSE 5555:5555
+CMD ["/bin/bash", "/opt/startup.sh"]
