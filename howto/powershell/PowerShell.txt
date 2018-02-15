@@ -1,0 +1,11 @@
+// FILESYSTEM
+rm -fo -r folder // delete folder recursiv
+
+// less errors 
+du 2> $null
+
+Get-Process | findstr.exe java
+Stop-Process -name java
+
+// set path
+set PATH=%PATH%;"C:\Program Files\erl9.2\bin"

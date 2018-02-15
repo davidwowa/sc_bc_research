@@ -1,0 +1,57 @@
+// CURRENT
+docker build --build-arg password=jastrebarsko --no-cache=true -t debian:c_erlang .
+docker build -t debian:c_mysql .
+docker run -ti --name testt debian:c_erlang
+docker run -ti -p 5555:5555 --name test2 --net testnet debian:c_erlang
+
+// STARTS AND STOPS
+docker run ... // run a new container with specifications
+docker start name_of_container // run a exists container
+docker restart name_of_container
+docker inspect container_name // get all data over container
+
+docker build -t image_name .
+docker run -d --name container_name image_name
+
+docker run -it ... // if container stopped after start
+
+docker exec -i -t NameOrId /bin/sh
+
+// SYSTEM LANDSCAPE
+docker image ls // show all downloaded images
+docker rmi image_name // delete images
+docker system prune // = clean docker system, if add param -a remove all and all
+docker images purge // remove dangling images
+docker volume ls
+docker volume rm volume_name volume_name
+docker stats // show docker system stats
+
+// DOCKER LOGS
+docker logs container_name
+
+// DOCKER NETWORKS
+docker network ls
+docker network create testnet // when I will that more than one container run
+
+// MYSQL ON DOCKER
+docker pull mysql/mysql-server:8.0
+// docker run -p 3306:3306 --name some-mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql:latest
+docker run -p 3306:3306 --name mysql_o -d mysql/mysql-server:8.0
+docker logs mysql1 2>&1 | findstr.exe GENERATED
+// docker logs mysql1 2>&1 | grep GENERATED
+// STORAGE DATA, BEFORE MUST BE DRIVE SHARED FOR DOCKER, SEE https://rominirani.com/docker-on-windows-mounting-host-directories-d96f3f056a2c
+docker run -p 3306:3306 --name mysql_o -v C:/Users/wdzak/sandbox/docker/mysql:/var/lib/mysql -d mysql/mysql-server:8.0
+docker exec -it mysql bash -l
+docker run -p 3306:3306 --name mysql -d --net testnet mysql/mysql-server:8.0 // option run in net
+
+// TENDERMINT ON DOCKER (SEE https://tendermint.readthedocs.io/en/master/tools/docker.html)
+docker run -it --rm -v "C:/Users/wdzak/sandbox/docker/tendermint:/tendermint" tendermint/tendermint init
+docker run --rm -v "C:/Users/wdzak/sandbox/docker/tendermint:/tendermint" tendermint/tendermint show_validator
+docker run --rm -d -v "C:/Users/wdzak/sandbox/docker/tendermint:/tendermint" tendermint/tendermint node
+
+// COPY OPERATIONS ON DOCKER
+docker cp <container>:/path/to/file.ext .
+docker cp file.ext <container>:/path/to/file.ext
+
+// ERLANG
+docker pull erlang

@@ -1,0 +1,17 @@
+mysql -u root -p
+//mysql -u [username] -p
+//use mysql;
+
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'root';
+//update user set password=PASSWORD("root") where User='root';
+
+create database test;
+
+create user 'test'@'localhost';
+ALTER USER 'test'@'localhost' IDENTIFIED BY 'test';
+grant all privileges on *.* to 'test'@'localhost';
+
+SHOW GRANTS user;
+FLUSH PRIVILEGES;
+
+DROP USER ‘username’@‘localhost’;
