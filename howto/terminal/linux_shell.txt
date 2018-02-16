@@ -1,0 +1,74 @@
+// CRYPTO
+echo MTI= | base64 --decode // 12
+echo 12 | base64 12 // MTI=
+
+// SYSTEM
+sudo nano /etc/dphys-swapfile
+sudo dphys-swapfile setup && sudo dphys-swapfile swapon
+// check architecture
+uname -a
+
+// PACKAGE MANAGER
+dpkg -l | grep packet
+List all installed packages 
+dpkg-query -l
+
+//SCREEN
+// create new screen
+screen
+Ctrl + A then D // detach new screen
+screen -r // get detached screen
+
+// UNKNOWN
+Alias test='apt-get update usw'
+last
+
+// PROZESSES
+ps -e | grep minerd
+tail -f /proc/<pid>/fd/1
+
+tail -f /proc/'ps -e | grep minerd'/fd/1
+
+// VIM
+Select all content in vim : % y +
+:u -> Undo
+set number
+// :48 go to linenumber 48
+
+
+// FILES AND FOLDERS
+Number of Files in Folder
+ls -l | wc -l
+for file in .[^.]*; do rm "$file"; done
+
+// 
+
+#!/bin/bash
+while IFS='' read -r line || [[ -n "$line" ]]; do
+    echo "Text read from file: $line"
+done < "$1"
+
+// LOGS
+Analyse all log-data
+zcat -f access.log* | goaccess
+Generate report from log-data
+zcat -f access.log* | goaccess -a -o report.html
+
+// CHURCHTOOLS
+stat -f '%A %a %N' churchtools-3.13d.zip
+
+// OSX
+Hostname change OSX
+"scutil --set HostName" mac
+
+// GIT
+gitt add .
+git commit -m "commit"
+push -u origin master
+
+// NETWORK
+nmap --stats-every 1s gsgsgs.hopto.org
+nmap -sP 192.168.2.1/24
+arp -a -n
+
+sudo nmap -sP 192.168.1.0/24 | awk '/^Nmap/{ip=$NF}/B8:27:EB/{print ip}'
