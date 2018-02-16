@@ -34,6 +34,8 @@ Select all content in vim : % y +
 :u -> Undo
 set number
 // :48 go to linenumber 48
+// go to end of file Shift G after Esc
+:set ruler
 
 
 // FILES AND FOLDERS
