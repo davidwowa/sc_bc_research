@@ -14,6 +14,7 @@ init(Req, Opts) ->
 
 websocket_init(State) ->
   lager:info("init websockets"),
+  db_utils:test_mysql(),
   {ok, State}.
 
 websocket_handle({text, Json}, State) ->

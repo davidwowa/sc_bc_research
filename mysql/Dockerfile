@@ -1,16 +1,31 @@
-FROM debian
+FROM ubuntu:latest
 
+MAINTAINER Nane Kratzke
+
+# Install latest updates
 RUN apt-get update
-RUN apt-get -y install mysql-client mysql-server
+RUN apt-get upgrade -y
 
-ENV MYSQL_ROOT_PASSWORD "root"
-ENV MYSQL_DATABASE "test"
-ENV MYSQL_USER "test"
-ENV MYSQL_PASSWORD "test"
+# Install mysql client and server
+RUN DEBIAN_FRONTEND=noninteractive apt-get -y install mysql-client mysql-server curl
 
-ADD ./startup.sh .
-ADD schema.sql .
+# Enable remote access (default is localhost only, we change this
+# otherwise our database would not be reachable from outside the container)
+RUN sed -i -e"s/^bind-address\s*=\s*127.0.0.1/bind-address = 0.0.0.0/" /etc/mysql/my.cnf
+
+# Install database
+ADD ./database.sql /var/db/database.sql
+
+# Set Standard settings
+ENV user student
+ENV password secret
+ENV url file:/var/db/database.sql
+ENV right READ
+
+# Install starting script
+ADD ./start_database.sh /usr/local/bin/start_database.sh
+RUN chmod +x /usr/local/bin/start_database.sh
 
 EXPOSE 3306
 
-CMD ["/bin/bash", "startup.sh"]
+CMD ["/usr/local/bin/start_database.sh"]

@@ -41,6 +41,8 @@ docker logs mysql1 2>&1 | findstr.exe GENERATED
 // docker logs mysql1 2>&1 | grep GENERATED
 // STORAGE DATA, BEFORE MUST BE DRIVE SHARED FOR DOCKER, SEE https://rominirani.com/docker-on-windows-mounting-host-directories-d96f3f056a2c
 docker run -p 3306:3306 --name mysql_o -v C:/Users/wdzak/sandbox/docker/mysql:/var/lib/mysql -d mysql/mysql-server:8.0
+docker run -p 3306:3306 --name mysql_o -v /Users/David/sandbox/mysql:/var/lib/mysql -d mysql/mysql-server:8.0
+
 docker exec -it mysql bash -l
 docker run -p 3306:3306 --name mysql -d --net testnet mysql/mysql-server:8.0 // option run in net
 

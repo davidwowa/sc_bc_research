@@ -11,7 +11,12 @@ create user 'test'@'localhost';
 ALTER USER 'test'@'localhost' IDENTIFIED BY 'test';
 grant all privileges on *.* to 'test'@'localhost';
 
+// GRANT ALL PRIVILEGES ON *.* TO 'test'@'%' WITH GRANT OPTION;
+
 SHOW GRANTS user;
 FLUSH PRIVILEGES;
 
 DROP USER ‘username’@‘localhost’;
+
+
+sed -i -e"s/^bind-address\s*=\s*127.0.0.1/bind-address = 0.0.0.0/" /etc/my.cnf
