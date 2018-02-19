@@ -3,33 +3,42 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <link href="css/title.css" rel="stylesheet" type="text/css"/>
-    <link href="css/log.css" rel="stylesheet" type="text/css"/>
-    <link href="css/root.css" rel="stylesheet" type="text/css"/>
-    <link href="css/menu.css" rel="stylesheet" type="text/css"/>
-
     <title>BC Node Status</title>
 </head>
 
 <body class="root">
-<ul class="menu">
-    <li><a id="home" class="active" href="#home" onclick="home(this.id)">Home</a></li>
-    <li><a id="my_projects" href="#my_projects" onclick="my_projects(this.id)">My Projects</a></li>
-    <li><a id="my_contracts" href="#my_contracts" onclick="my_contracts(this.id)">My Contracts</a></li>
-    <li><a id="my_actions" href="#my_actions" onclick="my_actions(this.id)">Actions</a></li>
-    <li><a id="contact" href="#contact" onclick="contact(this.id)">Contact</a></li>
-    <li><a id="about" href="#about" onclick="about(this.id)">About</a></li>
-    <li><a id="help" href="#help" onclick="help(this.id)">Help</a></li>
-    <li><a id="test" href="#test" onclick="test(this.id)">Test</a></li>
-</ul>
 
 <div style="padding:20px;margin-top:30px;height:1500px;"/>
 
 <div id="header">
     <div class="title">BC Node status</div>
+    <div id="buttons_content" class="buttons_block">
+        <button id="buttonUuid" class="btn" type="button"
+                onclick="getKeyPaar()">Create new key paar
+        </button>
+        <button id="buttonMine" class="btn" type="button" onclick="sign()">Sign</button>
+        <button id="buttonStop" class="btn" type="button" onclick="verify()">Verify</button>
+    </div>
     <div>
         Your ID:
         <div id="identity"></div>
+    </div>
+    <div>
+        <label>Private key</label>
+        <p/>
+        <textarea id="privateKey" rows="1" cols="200"> </textarea>
+        <p/>
+        <label>Public key</label>
+        <p/>
+        <textarea id="publicKey" rows="1" cols="200"> </textarea>
+        <p/>
+        <label>Message</label>
+        <p/>
+        <textarea id="messageArrea" cols="200"> </textarea>
+        <p/>
+        <label>Signature</label>
+        <p/>
+        <textarea id="signatureArrea" cols="200"> </textarea>
     </div>
 </div>
 

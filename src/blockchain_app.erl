@@ -79,4 +79,6 @@ install_mnesia_tables() ->
   mnesia:create_table(client,
     [{attributes, record_info(fields, client)},
       {ram_copies, [node()]}]),
+  mnesia:create_table(block, [{attributes, record_info(fields, block)},
+    {ram_copies, [node()]}]),
   ok.

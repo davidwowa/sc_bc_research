@@ -1,1 +1,2 @@
--record(client, {pid, guid, ip, address}).
+-record(client, {pid, guid, ip, address, value}).
+-record(block, {p_hash, hash, merkle_root, data_hash}).

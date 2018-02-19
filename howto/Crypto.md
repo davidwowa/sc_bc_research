@@ -1,7 +1,7 @@
 # Crypto in Erlang
 [MyProblemOnStack](https://stackoverflow.com/questions/48723509/signing-of-datablock-as-hash-in-erlang-not-working-key-derivation-based-on-ec/48797942#48797942)  
 
-## rough workflow
+## rough workflow for signing
 
 1. Configure crypto on ecdsa  
 `
@@ -27,3 +27,8 @@ Signature = crypto:sign(ecdsa, sha512, {digest, Hash}, [PrivKeyOut, EcdhParams])
 `
 Result = crypto:verify(ecdsa, sha512, Message2, Signature, [PublicKey, EcdhParams]).
 `
+
+## rough workflow for prof of work
+
+1. Data
+Message = <<"DataBlock">>.

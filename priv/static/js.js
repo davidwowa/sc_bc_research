@@ -5,7 +5,6 @@ var my_gid = guid();
 var my_cookie = "guid=" + my_gid;
 
 // menu functions
-
 function home(ce) {
     log_this("user clicked " + ce, 0);
 }
@@ -34,7 +33,6 @@ function help(ce) {
     log_this("user clicked " + ce, 0);
 }
 
-
 // websocket
 function init() {
     log_this("init client with uuid " + my_gid, 0);
@@ -62,7 +60,25 @@ socket.onopen = function () {
 // callback-Funktion wird gerufen, wenn eine neue Websocket-Nachricht eintrifft
 socket.onmessage = function (messageEvent) {
     var message = messageEvent.data;
-    log_this("incomming message : " + message, 0);
+    var obj = JSON.parse(message);
+
+    if (obj.hasOwnProperty('keys')) {
+        log_this(obj.keys[0] + " " + obj.keys[1], 0);
+        log_this(obj.keys[2] + " " + obj.keys[3], 0);
+
+        document.getElementById("publicKey").innerHTML = obj.keys[1];
+        document.getElementById("privateKey").innerHTML = obj.keys[3];
+
+    } else if (obj.hasOwnProperty('sign')) {
+
+        log_this("signature to message " + obj.sign[1], 0);
+
+        document.getElementById("signatureArrea").innerHTML = obj.sign[1];
+    } else if (obj.hasOwnProperty('verify')) {
+        log_this("verify " + obj.verify[1], 0);
+    } else {
+        log_this("ERROR " + obj, 1);
+    }
 };
 
 // callback-Funktion wird gerufen, wenn eine Fehler auftritt
@@ -74,6 +90,46 @@ socket.onclose = function (closeEvent) {
     log_this("Connection closed, Code: " + closeEvent.code + " reason: " + closeEvent.reason, 1);
 };
 
+//buttons
+function getKeyPaar() {
+    if (socket.readyState == socket.OPEN) {
+        log_this("get key paar", 0);
+        var msg = {messageKey: "keys"};
+        socket.send(JSON.stringify(msg));
+    } else {
+        log_this('websocket is not connected', 1);
+    }
+}
+
+function sign() {
+    if (socket.readyState == socket.OPEN) {
+        log_this("sign", 0);
+
+        var message1 = document.getElementById("messageArrea").value;
+        var key1 = document.getElementById("privateKey").value;
+
+        var msg = {messageKey: "sign", message: message1, privateKey: key1};
+        socket.send(JSON.stringify(msg));
+    } else {
+        log_this('websocket is not connected', 1);
+    }
+}
+
+function verify() {
+    if (socket.readyState == socket.OPEN) {
+        log_this("verify", 0);
+
+        var signature1 = document.getElementById("signatureArrea").value;
+        var publicKey1 = document.getElementById("publicKey").value;
+        var message1 = document.getElementById("messageArrea").value;
+
+        var msg = {messageKey: "verify", publicKey: publicKey1, signature: signature1, message: message1};
+        socket.send(JSON.stringify(msg));
+    } else {
+        log_this('websocket is not connected', 1);
+    }
+}
+
 // utils
 // http://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
 function guid() {
@@ -81,10 +137,10 @@ function guid() {
         return Math.floor((1 + Math.random()) * 0x10000).toString(16)
             .substring(1);
     }
+
     return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4()
         + s4() + s4();
 }
-
 
 // log
 function log_this(message, log_type) {

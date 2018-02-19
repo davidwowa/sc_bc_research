@@ -1,0 +1,8 @@
+{PublicKey, PrivKeyOut} = crypto_utils:generate_key_paar(),
+  %%db_utils:test_mysql(),
+  HashKey = hash_utils:getHEXValueOfKey(PublicKey),
+  HashPKey = hash_utils:getHEXValueOfKey(PrivKeyOut),
+  lager:info("public key"),
+  lager:info(HashKey),
+  lager:info("private key"),
+  lager:info(HashPKey),

@@ -14,22 +14,22 @@ init(Req, Opts) ->
 
 websocket_init(State) ->
   lager:info("init websockets"),
-  {PublicKey, _PrivKeyOut} = crypto_utils:generate_key_paar(),
-  db_utils:test_mysql(),
-  Hash = hash_utils:make_hash_from(PublicKey),
-  erlang:start_timer(1000, self(), Hash),
   {ok, State}.
 
-%% receive
+websocket_handle({text, Json}, State) ->
+  Map = jsone:decode(Json),
+  Message = maps:get(<<"messageKey">>, Map),
+  JSON = logic:handle_data(Json, Message),
+  Reply = {text, JSON},
+  {reply, Reply, State};
 websocket_handle({text, Msg}, State) ->
-  lager:info(<<Msg/binary>>),
-  {reply, {text, <<"That's what she said! ", Msg/binary>>}, State};
+  {reply, {text, <<"message ", Msg/binary>>}, State};
 websocket_handle(_Data, State) ->
   {ok, State}.
 
 %% send
 websocket_info({timeout, _Ref, Msg}, State) ->
-  erlang:start_timer(1000, self(), <<"How' you doin'?">>),
+  erlang:start_timer(100, self(), <<"How' you doin'?">>),
   {reply, {text, Msg}, State};
 websocket_info(_Info, State) ->
   {ok, State}.

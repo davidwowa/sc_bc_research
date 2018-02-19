@@ -7,21 +7,21 @@ rm -r _build
 rm rebar.lock
 
 #echo "clean"
-#/rebar3/_build/default/bin/rebar3 clean -a
+#~/git/rebar3/rebar3 clean -a
 
 #echo "rebar update"
-#/rebar3/_build/default/bin/rebar3 update
+#~/git/rebar3/rebar3 update
 
 #echo "rebar auto"
-#/rebar3/_build/default/bin/rebar3 auto
+#~/git/rebar3/rebar3 auto
 
 #echo "compile"
-#/rebar3/_build/default/bin/rebar3 compile
+#~/git/rebar3/rebar3 compile
 
 #echo "tree"
-#/rebar3/_build/default/bin/rebar3 tree
+#~/git/rebar3/rebar3 tree
 
 echo "run"
-/rebar3/_build/default/bin/rebar3 run
+~/git/rebar3/rebar3 run
 
 echo "end"

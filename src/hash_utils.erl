@@ -11,6 +11,10 @@
 
 %% API
 -export([make_hash_from/1]).
+-export([getHEXValueOfKey/1]).
+-export([list_to_hex/1]).
+
+getHEXValueOfKey(Key) when is_binary(Key) -> lists:flatten([integer_to_list(X, 16) || <<X>> <= Key]).
 
 %% See http://sacharya.com/tag/integer-to-hex-in-erlang/
 make_hash_from(S) ->
