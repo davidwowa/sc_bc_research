@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>BC Node Status</title>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
 </head>
 
 <body class="root">
@@ -19,31 +20,31 @@
         <button id="buttonMine" class="btn" type="button" onclick="sign()">Sign</button>
         <button id="buttonStop" class="btn" type="button" onclick="verify()">Verify</button>
     </div>
-    <div>
-        Your ID:
-        <div id="identity"></div>
-    </div>
-    <div>
-        <label>Private key</label>
-        <p/>
-        <textarea id="privateKey" rows="1" cols="200"> </textarea>
-        <p/>
-        <label>Public key</label>
-        <p/>
-        <textarea id="publicKey" rows="1" cols="200"> </textarea>
-        <p/>
-        <label>Message</label>
-        <p/>
-        <textarea id="messageArrea" cols="200"> </textarea>
-        <p/>
-        <label>Signature</label>
-        <p/>
-        <textarea id="signatureArrea" cols="200"> </textarea>
-    </div>
+    Your ID:
+    <div id="identity"></div>
+    Your IP:
+    <div id="ip"></div>
 </div>
-
-<div class="log" id="log"></div>
-
+<div>
+    <label>Private key</label>
+    <p/>
+    <textarea id="privateKey" rows="1" cols="200"> </textarea>
+    <p/>
+    <label>Public key</label>
+    <p/>
+    <textarea id="publicKey" rows="1" cols="200"> </textarea>
+    <p/>
+    <label>Message</label>
+    <p/>
+    <textarea id="messageArrea" cols="200"> </textarea>
+    <p/>
+    <label>Signature</label>
+    <p/>
+    <textarea id="signatureArrea" cols="200"> </textarea>
+</div>
+<div>
+    <div class="log" id="log"></div>
+</div>
 <script type="text/javascript" src="static/js.js">
 </script>
 </body>

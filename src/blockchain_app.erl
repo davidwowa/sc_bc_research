@@ -9,7 +9,7 @@
 
 -behaviour(application).
 
--include("client.hrl").
+-include("record.hrl").
 
 %% Application callbacks
 -export([start/2, stop/1]).
@@ -58,7 +58,7 @@ setup_cowboy() ->
 setup_mnesia() ->
   lager:info("setup mnesia"),
   {ok, _Apps} = application:ensure_all_started(mnesia, permanent),
-  case mnesia:wait_for_tables([clients], 5000) of                      %% are tables in mnesia ???
+  case mnesia:wait_for_tables([pseudonym], 5000) of                      %% are tables in mnesia ???
     ok ->
       lager:info("tables are created"),
       ok;
@@ -68,7 +68,7 @@ setup_mnesia() ->
       ok = install_mnesia_tables(),
       lager:info("tables are installed")
   end,
-  lager:info("setup mnesia OK!"),
+  lager:info("setup mnesia OK ! "),
   ok.
 
 install_mnesia_tables() ->
@@ -76,9 +76,11 @@ install_mnesia_tables() ->
   mnesia:create_schema([node()]),
   lager:info("mnesia start"),
   ok = mnesia:start(),
-  mnesia:create_table(client,
-    [{attributes, record_info(fields, client)},
+  mnesia:create_table(pseudonym,
+    [{attributes, record_info(fields, pseudonym)},
       {ram_copies, [node()]}]),
   mnesia:create_table(block, [{attributes, record_info(fields, block)},
+    {ram_copies, [node()]}]),
+  mnesia:create_table(key, [{attributes, record_info(fields, key)},
     {ram_copies, [node()]}]),
   ok.

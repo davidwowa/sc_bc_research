@@ -4,6 +4,8 @@ var socket = new WebSocket("ws://localhost:5555/websocket");
 var my_gid = guid();
 var my_cookie = "guid=" + my_gid;
 
+var ip_info;
+
 // menu functions
 function home(ce) {
     log_this("user clicked " + ce, 0);
@@ -93,8 +95,8 @@ socket.onclose = function (closeEvent) {
 //buttons
 function getKeyPaar() {
     if (socket.readyState == socket.OPEN) {
-        log_this("get key paar", 0);
-        var msg = {messageKey: "keys"};
+        var msg = {messageKey: "keys", guid: my_gid, ip: ip_info};
+        log_this(JSON.stringify(msg, null, 2), 0);
         socket.send(JSON.stringify(msg));
     } else {
         log_this('websocket is not connected', 1);
@@ -103,12 +105,12 @@ function getKeyPaar() {
 
 function sign() {
     if (socket.readyState == socket.OPEN) {
-        log_this("sign", 0);
-
         var message1 = document.getElementById("messageArrea").value;
-        var key1 = document.getElementById("privateKey").value;
 
+        var key1 = document.getElementById("privateKey").value;
         var msg = {messageKey: "sign", message: message1, privateKey: key1};
+
+        log_this(JSON.stringify(msg, null, 2), 0);
         socket.send(JSON.stringify(msg));
     } else {
         log_this('websocket is not connected', 1);
@@ -117,13 +119,13 @@ function sign() {
 
 function verify() {
     if (socket.readyState == socket.OPEN) {
-        log_this("verify", 0);
-
         var signature1 = document.getElementById("signatureArrea").value;
+
         var publicKey1 = document.getElementById("publicKey").value;
         var message1 = document.getElementById("messageArrea").value;
-
         var msg = {messageKey: "verify", publicKey: publicKey1, signature: signature1, message: message1};
+
+        log_this(JSON.stringify(msg, null, 2), 0);
         socket.send(JSON.stringify(msg));
     } else {
         log_this('websocket is not connected', 1);
@@ -181,3 +183,11 @@ function test(ce) {
 function ws_test_send() {
     ws_send("send test data");
 }
+
+$.getJSON('//freegeoip.net/json/?callback=?', function (data) {
+    var info = JSON.stringify(data, null, 2);
+    var json = JSON.parse(info);
+    log_this(ip_info, 0);
+    ip_info = json["ip"];
+    document.getElementById("ip").innerHTML = ip_info;
+});

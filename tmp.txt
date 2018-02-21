@@ -1,8 +1,12 @@
-{PublicKey, PrivKeyOut} = crypto_utils:generate_key_paar(),
-  %%db_utils:test_mysql(),
-  HashKey = hash_utils:getHEXValueOfKey(PublicKey),
-  HashPKey = hash_utils:getHEXValueOfKey(PrivKeyOut),
-  lager:info("public key"),
-  lager:info(HashKey),
-  lager:info("private key"),
-  lager:info(HashPKey),
+{couchbeam, ".*", {git, "https://github.com/benoitc/couchbeam", {branch, "master"}}},
+  {idna, ".*", {git, "https://github.com/benoitc/erlang-idna", {branch, "master"}}},
+  {mimerl, ".*", {git, "https://github.com/benoitc/mimerl", {branch, "master"}}},
+  {certifi, ".*", {git, "https://github.com/certifi/erlang-certifi", {branch, "master"}}},
+  {ssl_verify_fun, ".*", {git, "https://github.com/deadtrickster/ssl_verify_fun.erl", {branch, "master"}}}
+
+
+    couchbeam,
+    idna,
+    mimerl,
+    certifi,
+    ssl_verify_fun,

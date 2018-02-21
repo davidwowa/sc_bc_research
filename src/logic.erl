@@ -12,10 +12,16 @@
 %% API
 -export([handle_data/2]).
 
-
-handle_data(_, <<"keys">>) ->
+handle_data(Json, <<"keys">>) ->
   {PublicKey, PrivKeyOut} = crypto_utils:generate_key_paar(),
   Doc = {[{keys, [public_key, base64:encode(PublicKey), private_key, base64:encode(PrivKeyOut)]}]},
+  Map = jsone:decode(Json),
+  GUID = maps:get(<<"guid">>, Map),
+  Ip = maps:get(<<"ip">>, Map),
+  ok = db_utils:save_pseudonym_rel(GUID, base64:encode(PublicKey), Ip),
+  ok = db_utils:save_pseudonym(GUID, base64:encode(PublicKey), Ip),
+  ok = db_utils:save_keys(base64:encode(PublicKey), base64:encode(PrivKeyOut)),
+  ok = db_utils:save_keys_rel(base64:encode(PublicKey), base64:encode(PrivKeyOut)),
   jsone:encode(Doc);
 handle_data(Json, <<"sign">>) ->
   Map = jsone:decode(Json),
@@ -34,4 +40,5 @@ handle_data(Json, <<"verify">>) ->
   jsone:encode(Doc);
 handle_data(Json, _) ->
   %TODO
+  lager:error(Json),
   lager:error("ERROR").

@@ -1,5 +1,5 @@
 {application, blockchain,
-  [{description, "An OTP application"},
+  [{description, "An OTP blockchain application"},
     {vsn, "0.1.0"},
     {registered, []},
     {mod, {blockchain_app, []}},

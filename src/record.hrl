@@ -1,0 +1,3 @@
+-record(pseudonym, {guid, public_key, ip}).
+-record(block, {p_hash, hash, merkle_root, data}).
+-record(key, {private_key, public_key}).

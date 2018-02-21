@@ -46,6 +46,9 @@ docker run -p 3306:3306 --name mysql_o -v /Users/David/sandbox/mysql:/var/lib/my
 docker exec -it mysql bash -l
 docker run -p 3306:3306 --name mysql -d --net testnet mysql/mysql-server:8.0 // option run in net
 
+docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q) && docker rmi $(docker images -q) && docker build -t mysqlX . && docker run -p 3306:3306 mysqlX
+docker run --rm -it -p 3306:3306 -d mysql19 /bin/bash
+
 // TENDERMINT ON DOCKER (SEE https://tendermint.readthedocs.io/en/master/tools/docker.html)
 docker run -it --rm -v "C:/Users/wdzak/sandbox/docker/tendermint:/tendermint" tendermint/tendermint init
 docker run --rm -v "C:/Users/wdzak/sandbox/docker/tendermint:/tendermint" tendermint/tendermint show_validator

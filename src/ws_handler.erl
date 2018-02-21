@@ -1,7 +1,5 @@
 -module(ws_handler).
 
--include("client.hrl").
-
 -export([init/2, terminate/3]).
 -export([websocket_init/1]).
 -export([websocket_handle/2]).
@@ -14,7 +12,6 @@ init(Req, Opts) ->
 
 websocket_init(State) ->
   lager:info("init websockets"),
-  db_utils:test_mysql(),
   {ok, State}.
 
 websocket_handle({text, Json}, State) ->
@@ -23,8 +20,8 @@ websocket_handle({text, Json}, State) ->
   JSON = logic:handle_data(Json, Message),
   Reply = {text, JSON},
   {reply, Reply, State};
-websocket_handle({text, Msg}, State) ->
-  {reply, {text, <<"message ", Msg/binary>>}, State};
+%websocket_handle({text, Msg}, State) ->
+%  {reply, {text, <<"message ", Msg/binary>>}, State};
 websocket_handle(_Data, State) ->
   {ok, State}.
 
