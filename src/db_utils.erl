@@ -20,6 +20,31 @@
 -export([save_keys/2]).
 -export([save_block/4]).
 
+-export([save_pseudonym_couch/3]).
+-export([save_keys_couch/2]).
+
+
+save_pseudonym_couch(GUID, PublicKey, Ip) ->
+  Doc = #{guid => GUID, public_key => base64:encode(PublicKey), ip => Ip},
+  lager:info("CouchDB:save pseudonym"),
+  Json = jsone:encode(Doc),
+  %lager:info(Json),
+  Response = post("http://localhost:5984/blockchain", "application/json", Json),
+  Body = response_body(Response),
+  lager:info(Body),
+  lager:info("saved in couchDB").
+
+save_keys_couch(PublicKey, PrivateKey) ->
+  lager:info("CouchDB:save keys").
+
+%% http://no-fucking-idea.com/blog/2013/01/22/making-request-to-rest-resources-in-erlang/
+post(URL, ContentType, Body) -> request(post, {URL, [], ContentType, Body}).
+get(URL)                     -> request(get,  {URL, []}).
+response_body({ok, { _, _, Body}}) -> Body.
+
+request(Method, Body) ->
+  httpc:request(Method, Body, [], []).
+
 save_pseudonym_rel(GUID, PublicKey, Ip) ->
   lager:info("MySQL:save pseudonym"),
   {ok, Pid} = get_mysql_link(),

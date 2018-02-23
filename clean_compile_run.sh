@@ -7,7 +7,7 @@ rm -r _build
 rm rebar.lock
 
 #echo "clean"
-#~/git/rebar3/rebar3 clean -a
+~/git/rebar3/rebar3 clean -a
 
 #echo "rebar update"
 #~/git/rebar3/rebar3 update
@@ -16,7 +16,7 @@ rm rebar.lock
 #~/git/rebar3/rebar3 auto
 
 #echo "compile"
-#~/git/rebar3/rebar3 compile
+~/git/rebar3/rebar3 get-deps compile
 
 #echo "tree"
 #~/git/rebar3/rebar3 tree

@@ -18,10 +18,16 @@ handle_data(Json, <<"keys">>) ->
   Map = jsone:decode(Json),
   GUID = maps:get(<<"guid">>, Map),
   Ip = maps:get(<<"ip">>, Map),
+
   ok = db_utils:save_pseudonym_rel(GUID, base64:encode(PublicKey), Ip),
   ok = db_utils:save_pseudonym(GUID, base64:encode(PublicKey), Ip),
+
   ok = db_utils:save_keys(base64:encode(PublicKey), base64:encode(PrivKeyOut)),
   ok = db_utils:save_keys_rel(base64:encode(PublicKey), base64:encode(PrivKeyOut)),
+
+  db_utils:save_pseudonym_couch(GUID, base64:encode(PublicKey), Ip),
+  db_utils:save_keys_couch(base64:encode(PublicKey), base64:encode(PrivKeyOut)),
+
   jsone:encode(Doc);
 handle_data(Json, <<"sign">>) ->
   Map = jsone:decode(Json),
