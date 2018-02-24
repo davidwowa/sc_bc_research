@@ -16,6 +16,8 @@
 -export([save/3]).
 -export([save/4]).
 
+-export([get_pseudonym/1]).
+
 save(GUID, PublicKey, Ip) ->
   save_pseudonym_couch(GUID, PublicKey, Ip),
   ok = save_pseudonym_rel(GUID, PublicKey, Ip),
@@ -33,6 +35,9 @@ save(P_hash, Hash, Merkle_root, Data) ->
   ok = save_block_rel(P_hash, Hash, Merkle_root, Data),
   ok = save_block_mnesia(P_hash, Hash, Merkle_root, Data),
   ok = save_block_file(P_hash, Hash, Merkle_root, Data).
+
+get_pseudonym(PublicKey) ->
+  get_pseudonym_mnesia(PublicKey).
 
 % File
 save_pseudonym_file(GUID, PublicKey, Ip) ->
@@ -78,6 +83,7 @@ save_block_couch(P_hash, Hash, Merkle_root, Data) ->
 
 %% http://no-fucking-idea.com/blog/2013/01/22/making-request-to-rest-resources-in-erlang/
 post(URL, ContentType, Body) -> request(post, {URL, [], ContentType, Body}).
+put(URL, ContentType, Body) -> request(put, {URL, [], ContentType, Body}).
 get(URL) -> request(get, {URL, []}).
 response_body({ok, {_, _, Body}}) -> Body.
 
@@ -108,6 +114,13 @@ save_block_rel(P_hash, Hash, Merkle_root, Data) ->
   {ok, Pid} = get_mysql_link(),
   mysql:query(Pid, "INSERT INTO chain (p_hash, bchash, merkle_root, bcdata) VALUES (?, ?, ?, ?)", [P_hash, Hash, Merkle_root, Data]).
 
+get_pseudonym_mysql(PublicKey) ->
+  {ok, Pid} = get_mysql_link(),
+  {ok, ColumnNames, Rows} =
+    mysql:query(Pid, <<"SELECT * FROM pseudonyms WHERE bcaddress = ?">>, [PublicKey]),
+  %TODO crunch data...
+  lager:info(Rows).
+
 get_mysql_link() ->
   lager:info("link mysql connection"),
   mysql:start_link([{host, "localhost"}, {user, "block"},
@@ -128,3 +141,8 @@ save_block_mnesia(P_hash, Hash, Merkle_root, Data) ->
   lager:info("Mnesia:save block"),
   Block = #block{p_hash = P_hash, hash = Hash, merkle_root = Merkle_root, data = Data},
   mnesia:dirty_write(Block).
+
+get_pseudonym_mnesia(PublicKey) ->
+  mnesia:select(pseudonym, [{#pseudonym{public_key = PublicKey}}]),
+  [RecordList] = mnesia:dirty_read(pseudonym, PublicKey, write),
+  lager:info(RecordList#pseudonym.public_key).

@@ -93,8 +93,21 @@ socket.onclose = function (closeEvent) {
 };
 
 //buttons
+function load() {
+    if (socket.readyState == socket.OPEN) {
+        var publicKey1 = document.getElementById("publicKey").value;
+
+        var msg = {messageKey: "load", public_key: publicKey1};
+        log_this(JSON.stringify(msg, null, 2), 0);
+        socket.send(JSON.stringify(msg));
+    } else {
+        log_this('websocket is not connected', 1);
+    }
+}
+
 function getKeyPaar() {
     if (socket.readyState == socket.OPEN) {
+
         var msg = {messageKey: "keys", guid: my_gid, ip: ip_info};
         log_this(JSON.stringify(msg, null, 2), 0);
         socket.send(JSON.stringify(msg));

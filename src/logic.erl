@@ -36,6 +36,11 @@ handle_data(Json, <<"verify">>) ->
   Value = crypto_utils:verifyMessage(base64:decode(Signature), Message, base64:decode(PublicKey)),
   Doc = {[{verify, [verify, Value]}]},
   jsone:encode(Doc);
+handle_data(Json, <<"load">>) ->
+  Map = jsone:decode(Json),
+  PublicKey = maps:get(<<"public_key">>, Map),
+  Result = db_utils:get_pseudonym(PublicKey),
+  lager:info(Result);
 handle_data(Json, _) ->
   %TODO
   lager:error(Json),
