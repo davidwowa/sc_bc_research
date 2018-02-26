@@ -1,0 +1,16 @@
+textarea {
+    align: center;
+    caret-color: red;
+    border: 1px solid #cccccc;
+    background: #cccccc;
+    padding: 0.5em;
+    font-family: Tahoma, sans-serif;
+}
+
+textarea:focus {
+    background: #FFC;
+}
+
+textarea:hover {
+    background: #ffcc99;
+}

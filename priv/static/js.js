@@ -63,22 +63,23 @@ socket.onopen = function () {
 socket.onmessage = function (messageEvent) {
     var message = messageEvent.data;
     var obj = JSON.parse(message);
+    var obj_to_log = JSON.stringify(message, undefined);
+
+    log_this(obj_to_log, 0);
 
     if (obj.hasOwnProperty('keys')) {
-        log_this(obj.keys[0] + " " + obj.keys[1], 0);
-        log_this(obj.keys[2] + " " + obj.keys[3], 0);
-
         document.getElementById("publicKey").innerHTML = obj.keys[1];
         document.getElementById("privateKey").innerHTML = obj.keys[3];
 
     } else if (obj.hasOwnProperty('sign')) {
-
-        log_this("signature to message " + obj.sign[1], 0);
-
         document.getElementById("signatureArrea").innerHTML = obj.sign[1];
     } else if (obj.hasOwnProperty('verify')) {
-        log_this("verify " + obj.verify[1], 0);
-    } else {
+        log_this(obj.verify[1], 0);
+    } else if (obj.hasOwnProperty('load')) {
+        document.getElementById("ipLast").innerHTML = obj.load[5];
+        document.getElementById("identityLast").innerHTML = obj.load[1];
+    }
+    else {
         log_this("ERROR " + obj, 1);
     }
 };
@@ -121,7 +122,8 @@ function sign() {
         var message1 = document.getElementById("messageArrea").value;
 
         var key1 = document.getElementById("privateKey").value;
-        var msg = {messageKey: "sign", message: message1, privateKey: key1};
+        var key2 = document.getElementById("publicKey").value;
+        var msg = {messageKey: "sign", message: message1, privateKey: key1, publicKey: key2};
 
         log_this(JSON.stringify(msg, null, 2), 0);
         socket.send(JSON.stringify(msg));
@@ -159,7 +161,7 @@ function guid() {
 
 // log
 function log_this(message, log_type) {
-    console.log(message);
+    //console.log(message);
     var current_time = new Date();
     var div = document.createElement("div");
 

@@ -1,3 +1,4 @@
--record(pseudonym, {guid, public_key, ip}).
--record(block, {p_hash, hash, merkle_root, data}).
--record(key, {private_key, public_key}).
+-record(pseudonym, {guid, public_key, ip, timestamp}).
+-record(block, {p_hash, hash, merkle_root, data, timestamp}).
+-record(key, {private_key, public_key, timestamp}).
+-record(message, {public_key, signature, timestamp}).
