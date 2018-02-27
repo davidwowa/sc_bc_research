@@ -4,3 +4,23 @@
     font-family: 'Courier New', Courier, 'Lucida Sans Typewriter',
     'Lucida Typewriter';
 }
+
+.box {
+    float: left;
+    width: 50%;
+    padding: 20px;
+    box-sizing: border-box;
+    border: 1px solid #d1ce1d;
+}
+
+.box h1 {
+    text-align: left;
+    margin-top: -30px;
+    height: 10px;
+    line-height: 20px;
+    font-size: 15px;
+}
+
+.box h1 span {
+    background-color: #000000;
+}

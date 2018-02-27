@@ -1,21 +1,2 @@
-{couchbeam, ".*", {git, "https://github.com/benoitc/couchbeam", {branch, "master"}}},
-  {idna, ".*", {git, "https://github.com/benoitc/erlang-idna", {branch, "master"}}},
-  {mimerl, ".*", {git, "https://github.com/benoitc/mimerl", {branch, "master"}}},
-  {certifi, ".*", {git, "https://github.com/certifi/erlang-certifi", {branch, "master"}}},
-  {ssl_verify_fun, ".*", {git, "https://github.com/deadtrickster/ssl_verify_fun.erl", {branch, "master"}}}
-
-
-    couchbeam,
-    idna,
-    mimerl,
-    certifi,
-    ssl_verify_fun,
-
-
-
-{msgpack, ".*", {git, "https://github.com/msgpack/msgpack-erlang", {branch, "master"}}},
-  {jiffy, {git, "https://github.com/davisp/jiffy", {tag,"0.8.5"}}},
-  {leptus, ".*", {git, "https://github.com/s1n4/leptus", {branch, "master"}}}
-
-    {jsx, {git, "https://github.com/talentdeficit/jsx", {branch, "v2.8.0"}}},
-    {restc, ".*", {git, "https://github.com/kivra/restclient", {tag, "0.4.1"}}}
+MIGIAkIBzGibQXdkFW5JLpYLhgEJWsiP5JuvMOgyC5lXG2fgbG8JgPP0IW3qdPon3uDYvwetSRDYlTcDaLpA/VJkq8yeavMCQgGnaaAvVPJ2lrDTlR9VF+ldRgMt0pmJF36nQyHVjIrLnc8zCHi/ZGeyoBhGrctGGI9HS6S8atXsfU8kaDmfa0W1UA==
+MIGHAkFs9L9R94Euzpqxyl/c95/GEIVNvBB6QAFNv/7NNhHWtQpMi+3ajiEZNdGTXXSd+dvFYMKCJQRjXD15IWWLLPdYCAJCAbACYIUSEXilpb/YiN5MOBBOFbwLWqfFs8U1IaKpHK5BWsE4d4YErvEmHKxz5bhRhgI5+KGhjTw9ArsAj6zPz8yX

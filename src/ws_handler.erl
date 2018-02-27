@@ -8,7 +8,7 @@
 
 init(Req, Opts) ->
   lager:info("init websocket handler"),
-  {cowboy_websocket, Req, Opts}.
+  {cowboy_websocket, Req, Opts, #{idle_timeout => 6000000}}.
 
 websocket_init(State) ->
   lager:info("init websockets"),
@@ -27,7 +27,7 @@ websocket_handle(_Data, State) ->
 
 %% send
 websocket_info({timeout, _Ref, Msg}, State) ->
-  erlang:start_timer(100, self(), <<"How' you doin'?">>),
+  %erlang:start_timer(100, self(), <<"How' you doin'?">>),
   {reply, {text, Msg}, State};
 websocket_info(_Info, State) ->
   {ok, State}.
@@ -36,6 +36,7 @@ websocket_terminate(_Reason, _Req, _State) ->
   lager:info("terminate websockets"),
   ok.
 
-terminate(_Reason, _Req, _State) ->
+terminate(Reason, _Req, _State) ->
   lager:info("terminate application"),
+  lager:info(Reason),
   ok.

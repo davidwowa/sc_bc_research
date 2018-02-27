@@ -4,7 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <title>BC Node Status</title>
+
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+
     <link rel="stylesheet" type="text/css" href="css/table.css">
     <link rel="stylesheet" type="text/css" href="css/log.css">
     <link rel="stylesheet" type="text/css" href="css/root.css">
@@ -16,66 +18,115 @@
 
 <div id="header">
     <div class="title" align="center">BC Node status</div>
-    <div id="buttons_content" align="center">
-        <button id="buttonUuid" class="btn" type="button"
-                onclick="getKeyPaar()">Create new key paar / pseudonym
-        </button>
-        <button id="buttonMine" class="btn" type="button" onclick="sign()">Sign</button>
-        <button id="buttonStop" class="btn" type="button" onclick="verify()">Verify</button>
-        <button id="buttonStop" class="btn" type="button" onclick="load()">Load pseudonym data</button>
-    </div>
-    <div>
-        <table align="center">
-            <tr>
-                <th>GUID</th>
-                <th>IP</th>
-                <th>Last GUID</th>
-                <th>Last IP</th>
-            </tr>
-            <tr>
-                <th>
-                    <div id="identity"></div>
-                </th>
-                <th>
-                    <div id="ip"></div>
-                </th>
-                <th>
-                    <div id="identityLast">
-                </th>
-                <th>
-                    <div id="ipLast"></div>
-                </th>
-            </tr>
-        </table>
-    </div>
 </div>
+<p/>
 <div>
-    <p/>
-    <label>Private key</label>
-    <p/>
-    <textarea id="privateKey" rows="1" cols="200" readonly> </textarea>
-    <p/>
-    <label>Public key</label>
-    <p/>
-    <textarea id="publicKey" rows="1" cols="200"> </textarea>
-    <p/>
-    <label>Message</label>
-    <p/>
-    <textarea id="messageArrea" cols="200">Test Message</textarea>
-    <p/>
-    <label>Signature</label>
-    <p/>
-    <textarea id="signatureArrea" cols="200"> </textarea>
-    <p/>
-    <label>Smart contract</label>
-    <p/>
-    <textarea style="textarea:sc" id="smartContractArrea" cols="200"> </textarea>
+    <table align="center">
+        <tr>
+            <th>GUID</th>
+            <th>IP</th>
+            <th>Last GUID</th>
+            <th>Last IP</th>
+            <th>Deposit</th>
+        </tr>
+        <tr>
+            <th>
+                <div id="identity"></div>
+            </th>
+            <th>
+                <div id="ip"></div>
+            </th>
+            <th>
+                <div id="identityLast">
+            </th>
+            <th>
+                <div id="ipLast"></div>
+            </th>
+            <th>
+                <div id="deposit"></div>
+            </th>
+        </tr>
+    </table>
 </div>
-<div class="log">
-    <label>Log:</label>
-    <div id="log"></div>
+<p/>
+<div id="buttons_content" align="center">
+    <button id="buttonUuid" class="btn" type="button"
+            onclick="getKeyPaar(this.id)">Create new key paar / pseudonym
+    </button>
+    <button id="buttonStop" class="btn" type="button" onclick="load(this.id)">Load pseudonym data</button>
+    <button id="rec_test" class="btn" type="button" onclick="test(this.id)">Test</button>
 </div>
+<p/>
+<div>
+    <div class="box">
+        <h1><span>Your Account:</span></h1>
+        <p/>
+        <label>Private key</label>
+        <p/>
+        <textarea id="privateKey" rows="1" readonly></textarea>
+        <p/>
+        <label>Public key</label>
+        <p/>
+        <textarea id="publicKey" rows="1"></textarea>
+        <p/>
+        <label>Message</label>
+        <p/>
+        <textarea id="messageArrea">Test Message</textarea>
+        <p/>
+        <label>Signature</label>
+        <p/>
+        <textarea id="signatureArrea"></textarea>
+        <p/>
+        <label>Smart contract</label>
+        <p/>
+        <textarea style="textarea:sc" id="smartContractArrea"></textarea>
+        <div id="buttons_content_my">
+            <button id="my_sign" class="btn" type="button" onclick="my_sign(this.id)">Sign</button>
+            <button id="my_verify" class="btn" type="button" onclick="my_verify(this.id)">Verify</button>
+            <button id="my_set" class="btn" type="button" onclick="my_set(this.id)">Write in BC</button>
+        </div>
+    </div>
+    <div class="box">
+        <h1><span>Transfer:</span></h1>
+        <p/>
+        <label>Recipient</label>
+        <p/>
+        <textarea id="recipient" rows="1"></textarea>
+        <p/>
+        <label>Value</label>
+        <p/>
+        <textarea id="recipientValue" rows="1"></textarea>
+        <p/>
+        <label>Message</label>
+        <p/>
+        <textarea id="messageToRecipient">Test Message</textarea>
+        <p/>
+        <label>Signature</label>
+        <p/>
+        <textarea id="signatureToRecipientArrea" readonly></textarea>
+        <p/>
+        <label>Smart contract</label>
+        <p/>
+        <textarea style="textarea:sc" id="smartContractArreaRecipient"></textarea>
+        <div id="buttons_content_rec">
+            <button id="rec_sign" class="btn" type="button" onclick="rec_sign(this.id)">Sign</button>
+            <button id="rec_verify" class="btn" type="button" onclick="rec_verify(this.id)">Verify</button>
+            <button id="rec_set" class="btn" type="button" onclick="rec_send(this.id)">Send</button>
+        </div>
+    </div>
+</div>
+
+<div>
+    <p id="message"></p>
+
+    <div class="log">
+        <label>Log:</label>
+        <div class="log" id="log"></div>
+    </div>
+</div>
+
 <script type="text/javascript" src="static/js.js">
 </script>
+
 </body>
 </html>

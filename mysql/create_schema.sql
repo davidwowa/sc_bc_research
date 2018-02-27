@@ -13,6 +13,7 @@ CREATE TABLE `pseudonyms` (
   `GUID`      VARCHAR(38)  NOT NULL,
   `bcaddress` VARCHAR(182) NOT NULL,
   `ip`        VARCHAR(50)  NOT NULL,
+  `value`     BIGINT DEFAULT 0,
   `tt` VARCHAR(30) NOT NULL,
   PRIMARY KEY (`bcaddress`)
 );

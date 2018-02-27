@@ -1,10 +1,13 @@
 textarea {
+    font-size: 15px;
     align: center;
+    width: 100%;
     caret-color: red;
     border: 1px solid #cccccc;
     background: #cccccc;
     padding: 0.5em;
-    font-family: Tahoma, sans-serif;
+    font-family: 'Courier New', Courier, 'Lucida Sans Typewriter',
+    'Lucida Typewriter';
 }
 
 textarea:focus {

@@ -6,35 +6,6 @@ var my_cookie = "guid=" + my_gid;
 
 var ip_info;
 
-// menu functions
-function home(ce) {
-    log_this("user clicked " + ce, 0);
-}
-
-function my_projects(ce) {
-    log_this("user clicked " + ce, 0);
-}
-
-function my_contracts(ce) {
-    log_this("user clicked " + ce, 0);
-}
-
-function my_actions(ce) {
-    log_this("user clicked " + ce, 0);
-}
-
-function contact(ce) {
-    log_this("user clicked " + ce, 0);
-}
-
-function about(ce) {
-    log_this("user clicked " + ce, 0);
-}
-
-function help(ce) {
-    log_this("user clicked " + ce, 0);
-}
-
 // websocket
 function init() {
     log_this("init client with uuid " + my_gid, 0);
@@ -50,7 +21,17 @@ function init() {
 
 init();
 
+function is_websocket_closed() {
+    if (socket.readyState == WebSocket.CLOSED) {
+        log_this("websocket was closed, reopen", 2);
+        socket.onopen;
+    } else {
+        log_this("websocket is open", 0)
+    }
+}
+
 function ws_send(data_to_send) {
+    is_websocket_closed();
     log_this("send message over websocket " + data_to_send, 0);
     socket.send(data_to_send);
 }
@@ -70,14 +51,25 @@ socket.onmessage = function (messageEvent) {
     if (obj.hasOwnProperty('keys')) {
         document.getElementById("publicKey").innerHTML = obj.keys[1];
         document.getElementById("privateKey").innerHTML = obj.keys[3];
+        document.getElementById("deposit").innerHTML = obj.keys[7];
 
     } else if (obj.hasOwnProperty('sign')) {
         document.getElementById("signatureArrea").innerHTML = obj.sign[1];
     } else if (obj.hasOwnProperty('verify')) {
         log_this(obj.verify[1], 0);
+        var txt;
+        if (true == obj.verify[1]) {
+            txt = "Signature OK!";
+        } else {
+            txt = "Signature wrong!";
+        }
+        document.getElementById("message").innerHTML = txt;
     } else if (obj.hasOwnProperty('load')) {
         document.getElementById("ipLast").innerHTML = obj.load[5];
         document.getElementById("identityLast").innerHTML = obj.load[1];
+        document.getElementById("deposit").innerHTML = obj.load[9];
+    } else if (obj.hasOwnProperty('signforsend')) {
+        document.getElementById("signatureToRecipientArrea").innerHTML = obj.signforsend[1];
     }
     else {
         log_this("ERROR " + obj, 1);
@@ -87,14 +79,17 @@ socket.onmessage = function (messageEvent) {
 // callback-Funktion wird gerufen, wenn eine Fehler auftritt
 socket.onerror = function (errorEvent) {
     log_this("error! connection lost" + errorEvent, 1);
+    is_websocket_closed();
 };
 
 socket.onclose = function (closeEvent) {
     log_this("Connection closed, Code: " + closeEvent.code + " reason: " + closeEvent.reason, 1);
+    is_websocket_closed();
 };
 
-//buttons
-function load() {
+//common buttons
+function load(ce) {
+    log_this("user clicked " + ce, 0);
     if (socket.readyState == socket.OPEN) {
         var publicKey1 = document.getElementById("publicKey").value;
 
@@ -106,7 +101,8 @@ function load() {
     }
 }
 
-function getKeyPaar() {
+function getKeyPaar(ce) {
+    log_this("user clicked " + ce, 0);
     if (socket.readyState == socket.OPEN) {
 
         var msg = {messageKey: "keys", guid: my_gid, ip: ip_info};
@@ -117,7 +113,9 @@ function getKeyPaar() {
     }
 }
 
-function sign() {
+// only user + sc
+function my_sign(ce) {
+    log_this("user clicked " + ce, 0);
     if (socket.readyState == socket.OPEN) {
         var message1 = document.getElementById("messageArrea").value;
 
@@ -132,7 +130,8 @@ function sign() {
     }
 }
 
-function verify() {
+function my_verify(ce) {
+    log_this("user clicked " + ce, 0);
     if (socket.readyState == socket.OPEN) {
         var signature1 = document.getElementById("signatureArrea").value;
 
@@ -147,6 +146,57 @@ function verify() {
     }
 }
 
+function my_set(ce) {
+    log_this("user clicked " + ce, 0);
+    // TODO
+}
+
+// transfer
+function rec_sign(ce) {
+    log_this("user clicked " + ce, 0);
+    if (socket.readyState == socket.OPEN) {
+        var message1 = document.getElementById("messageToRecipient").value;
+
+        var key1 = document.getElementById("privateKey").value;
+        var key2 = document.getElementById("publicKey").value;
+
+        var recipient = document.getElementById("recipient").value;
+        var msg = {
+            messageKey: "signforsend",
+            message: message1,
+            privateKey: key1,
+            publicKey: key2,
+            recipient: recipient
+        };
+
+        log_this(JSON.stringify(msg, null, 2), 0);
+        socket.send(JSON.stringify(msg));
+    } else {
+        log_this('websocket is not connected', 1);
+    }
+}
+
+function rec_verify(ce) {
+    log_this("user clicked " + ce, 0);
+    if (socket.readyState == socket.OPEN) {
+        var signature1 = document.getElementById("signatureToRecipientArrea").value;
+
+        var publicKey1 = document.getElementById("publicKey").value;
+        var message1 = document.getElementById("messageToRecipient").value;
+        var msg = {messageKey: "verify", publicKey: publicKey1, signature: signature1, message: message1};
+
+        log_this(JSON.stringify(msg, null, 2), 0);
+        socket.send(JSON.stringify(msg));
+    } else {
+        log_this('websocket is not connected', 1);
+    }
+}
+
+function rec_send(ce) {
+    log_this("user clicked " + ce, 0);
+    // TODO
+}
+
 // utils
 // http://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
 function guid() {
@@ -159,7 +209,7 @@ function guid() {
         + s4() + s4();
 }
 
-// log
+// logging
 function log_this(message, log_type) {
     //console.log(message);
     var current_time = new Date();
@@ -199,6 +249,7 @@ function ws_test_send() {
     ws_send("send test data");
 }
 
+// get ip address
 $.getJSON('//freegeoip.net/json/?callback=?', function (data) {
     var info = JSON.stringify(data, null, 2);
     var json = JSON.parse(info);
