@@ -209,6 +209,58 @@ function guid() {
         + s4() + s4();
 }
 
+function create_block(pHash, Hash, MerkleRoot, Data, TimeStamp) {
+    var div = document.createElement("div");
+    div.innerHTML = "<span>" + current_time + "-" + message + "</span>";
+
+
+    document.getElementById("blockchain").insertBefore(div,
+        document.getElementById("blockchain").firstChild);
+}
+
+function createTable(pHash, Hash, MerkleRoot, Data, TimeStamp) {
+    var table = document.createElement('table');
+
+    var row0 = table.insertRow(0);
+    var row1 = table.insertRow(1);
+    var row2 = table.insertRow(2);
+    var row3 = table.insertRow(3);
+    var row4 = table.insertRow(4);
+
+    var row0col1 = row0.insertCell(0);
+    row0col1.innerHTML = 'pHash';
+
+    var row1col1 = row1.insertCell(0);
+    row1col1.innerHTML = 'Hash';
+
+    var row2col1 = row2.insertCell(0);
+    row2col1.innerHTML = 'Root';
+
+    var row3col1 = row3.insertCell(0);
+    row3col1.innerHTML = 'Data';
+
+    var row4col1 = row4.insertCell(0);
+    row4col1.innerHTML = 'TimeStamp';
+
+    var row0col2 = row0.insertCell(1);
+    row0col2.innerHTML = pHash;
+
+    var row1col2 = row1.insertCell(1);
+    row1col2.innerHTML = Hash;
+
+    var row2col2 = row2.insertCell(1);
+    row2col2.innerHTML = MerkleRoot;
+
+    var row3col2 = row3.insertCell(1);
+    row3col2.innerHTML = Data;
+
+    var row4col2 = row4.insertCell(1);
+    row4col2.innerHTML = TimeStamp;
+
+    var div = document.getElementById('blockchain');
+    div.appendChild(table);
+}
+
 // logging
 function log_this(message, log_type) {
     //console.log(message);
@@ -241,6 +293,8 @@ function test(ce) {
     log_this("test_debug_log", 2);
     log_this("test_trace_log", 3);
     log_this("generate test guid " + guid(), 0);
+
+    createTable("1", "2", "3", "4", "5");
 
     ws_test_send();
 }

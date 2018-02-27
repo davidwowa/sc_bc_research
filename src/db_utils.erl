@@ -18,6 +18,7 @@
 -export([save_message/3]).
 
 -export([get_pseudonym/1]).
+-export([get_condidates_numer/0]).
 
 save_pseudonym(GUID, PublicKey, Ip, Value, TT) ->
   ok = save_pseudonym_couch(GUID, PublicKey, Ip, Value, TT),
@@ -142,8 +143,17 @@ save_message_rel(Signature, PublicKey, TT) ->
   {ok, Pid} = get_mysql_link(),
   mysql:query(Pid, "INSERT INTO messages (signature, bcaddress, tt) VALUES (?, ?, ?)", [Signature, PublicKey, TT]).
 
+get_condidates_numer() ->
+  lager:info("MySQL:load candidates number"),
+  {ok, Pid} = get_mysql_link(),
+  %{ok, _, Rows}
+  {ok, _, Rows} =
+    mysql:query(Pid, <<"SELECT COUNT(*) FROM candidates_pool">>),
+  [[Result]] = Rows,
+  Result.
+
 get_pseudonym_mysql(PublicKey) ->
-  lager:info("load pseudonym"),
+  lager:info("MySQL:load pseudonym"),
   {ok, Pid} = get_mysql_link(),
   %{ok, ColumnNames, Rows}
   {ok, _, Rows} =

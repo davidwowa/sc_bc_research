@@ -15,7 +15,8 @@
     display: inline-block;
     cursor: pointer;
     color: #ffffff;
-    font-family: Arial;
+    font-family: 'Courier New', Courier, 'Lucida Sans Typewriter',
+    'Lucida Typewriter';
     font-size: 13px;
     font-weight: bold;
     padding: 6px 12px;

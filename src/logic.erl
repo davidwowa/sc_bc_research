@@ -13,6 +13,7 @@
 
 %% API
 -export([handle_data/2]).
+-export([mining/0]).
 
 handle_data(Json, <<"keys">>) ->
   {PublicKey, PrivKeyOut} = crypto_utils:generate_key_paar(),
@@ -64,3 +65,12 @@ handle_data(Json, _) ->
   %TODO
   lager:error(Json),
   lager:error("ERROR: wrong message from client").
+
+mining() ->
+  R = db_utils:get_condidates_numer(),
+  if
+    R >= 5 -> run_mining();
+    true -> lager:info("Mining:nothing to do")
+  end.
+
+run_mining() -> lager:info("Mining: mining...").

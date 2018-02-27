@@ -54,6 +54,8 @@ setup_cowboy() ->
   {ok, _} = cowboy:start_clear(ssl, [{port, 5555}], #{env => #{dispatch => Dispatch}}),
   lager:info("setup server OK!"),
   %%websocket_sup:start_link(),
+  % check database for block mining
+  timer:apply_interval(5000, logic, mining, []),
   ok.
 
 setup_mnesia() ->
