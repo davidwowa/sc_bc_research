@@ -16,9 +16,11 @@
 -export([save_keys/3]).
 -export([save_block/5]).
 -export([save_message/3]).
+-export([save_candidate_log/7]).
+-export([save_candidate_pool/6]).
 
 -export([get_pseudonym/1]).
--export([get_condidates_numer/0]).
+-export([get_candidates_number/0]).
 
 save_pseudonym(GUID, PublicKey, Ip, Value, TT) ->
   ok = save_pseudonym_couch(GUID, PublicKey, Ip, Value, TT),
@@ -48,8 +50,27 @@ save_message(Signature, PublicKey, TT) ->
   ok = save_message_couch(Signature, PublicKey, TT),
   ok.
 
+%TODO rename fee to value
+save_candidate_pool(Signature, PublicKey, Hash, Message, Fee, TT) ->
+  ok = save_candidate_pool_file(Signature, PublicKey, Hash, Message, Fee, TT),
+  ok = save_candidate_pool_couch(Signature, PublicKey, Hash, Message, Fee, TT),
+  ok = save_candidate_pool_rel(Signature, PublicKey, Hash, Message, Fee, TT),
+  ok = save_candidate_pool_mnesia(Signature, PublicKey, Hash, Message, Fee, TT),
+  ok.
+
+%TODO rename fee to value
+save_candidate_log(Signature, PublicKey, Hash, Message, Fee, TT, Mined) ->
+  ok = save_candidate_log_file(Signature, PublicKey, Hash, Message, Fee, TT, Mined),
+  ok = save_candidate_log_couch(Signature, PublicKey, Hash, Message, Fee, TT, Mined),
+  ok = save_candidate_log_rel(Signature, PublicKey, Hash, Message, Fee, TT, Mined),
+  ok = save_candidate_log_mnesia(Signature, PublicKey, Hash, Message, Fee, TT, Mined),
+  ok.
+
 get_pseudonym(PublicKey) ->
-  get_pseudonym_mysql(PublicKey).
+  get_pseudonym_rel(PublicKey).
+
+get_candidates_number() ->
+  get_candidates_number_rel().
 
 % File
 save_pseudonym_file(GUID, PublicKey, Ip, Value, TT) ->
@@ -76,10 +97,24 @@ save_message_file(PublicKey, Signature, TT) ->
   Json = jsone:encode(Doc),
   file:write_file(get_file_name_messages(), io_lib:fwrite("~p.\n", [Json]), [append]).
 
+save_candidate_pool_file(Signature, PublicKey, Hash, Message, Fee, TT) ->
+  lager:info("File:save candidate pool"),
+  Doc = #{signature => Signature, public_key => PublicKey, hash => Hash, message => Message, fee => Fee, tt => TT},
+  Json = jsone:encode(Doc),
+  file:write_file(get_file_name_candidates_pool(), io_lib:fwrite("~p.\n", [Json]), [append]).
+
+save_candidate_log_file(Signature, PublicKey, Hash, Message, Fee, TT, Mined) ->
+  lager:info("File:save candidate log"),
+  Doc = #{signature => Signature, public_key => PublicKey, hash => Hash, message => Message, fee => Fee, tt => TT, tt_mined => Mined},
+  Json = jsone:encode(Doc),
+  file:write_file(get_file_name_candidates_log(), io_lib:fwrite("~p.\n", [Json]), [append]).
+
 get_file_name_pseudonyms() -> "/Users/David/sandbox/mt/bc/db/pseudonyms.db".
 get_file_name_keys() -> "/Users/David/sandbox/mt/bc/db/keys.db".
 get_file_name_blocks() -> "/Users/David/sandbox/mt/bc/db/blocks.db".
 get_file_name_messages() -> "/Users/David/sandbox/mt/bc/db/messages.db".
+get_file_name_candidates_pool() -> "/Users/David/sandbox/mt/bc/db/candidates_pool.db".
+get_file_name_candidates_log() -> "/Users/David/sandbox/mt/bc/db/candidates_log.db".
 
 % CouchDB
 save_pseudonym_couch(GUID, PublicKey, Ip, Value, TT) ->
@@ -106,6 +141,20 @@ save_block_couch(P_hash, Hash, Merkle_root, Data, TT) ->
 save_message_couch(Signature, PublicKey, TT) ->
   lager:info("CoucDB:save message"),
   Doc = #{public_key => PublicKey, signature => Signature, timestamp => TT},
+  Json = jsone:encode(Doc),
+  post(get_couchdb_url(), get_couchdb_mime_type(), Json),
+  ok.
+
+save_candidate_pool_couch(Signature, PublicKey, Hash, Message, Fee, TT) ->
+  lager:info("CoucDB:save candidate pool"),
+  Doc = #{signature => Signature, public_key => PublicKey, hash => Hash, message => Message, fee => Fee, tt => TT},
+  Json = jsone:encode(Doc),
+  post(get_couchdb_url(), get_couchdb_mime_type(), Json),
+  ok.
+
+save_candidate_log_couch(Signature, PublicKey, Hash, Message, Fee, TT, Mined) ->
+  lager:info("CoucDB:save candidate log"),
+  Doc = #{signature => Signature, public_key => PublicKey, hash => Hash, message => Message, fee => Fee, tt => TT, tt_mined => Mined},
   Json = jsone:encode(Doc),
   post(get_couchdb_url(), get_couchdb_mime_type(), Json),
   ok.
@@ -143,16 +192,25 @@ save_message_rel(Signature, PublicKey, TT) ->
   {ok, Pid} = get_mysql_link(),
   mysql:query(Pid, "INSERT INTO messages (signature, bcaddress, tt) VALUES (?, ?, ?)", [Signature, PublicKey, TT]).
 
-get_condidates_numer() ->
-  lager:info("MySQL:load candidates number"),
+save_candidate_pool_rel(Signature, PublicKey, Hash, Message, Fee, TT) ->
+  lager:info("MySQL:save candidate pool"),
   {ok, Pid} = get_mysql_link(),
-  %{ok, _, Rows}
+  mysql:query(Pid, "INSERT INTO candidates_pool (signature, bcaddress, hash, message, fee, tt) VALUES (?, ?, ?, ?, ?, ?)", [Signature, PublicKey, Hash, Message, Fee, TT]).
+
+save_candidate_log_rel(Signature, PublicKey, Hash, Message, Fee, TT, Mined) ->
+  lager:info("MySQL:save candidate log"),
+  {ok, Pid} = get_mysql_link(),
+  mysql:query(Pid, "INSERT INTO candidates_pool (signature, bcaddress, hash, message, fee, tt, tt_mined) VALUES (?, ?, ?, ?, ?, ?, ?)", [Signature, PublicKey, Hash, Message, Fee, TT, Mined]).
+
+get_candidates_number_rel() ->
+  %lager:info("MySQL:load candidates number"),
+  {ok, Pid} = get_mysql_link(),
   {ok, _, Rows} =
     mysql:query(Pid, <<"SELECT COUNT(*) FROM candidates_pool">>),
   [[Result]] = Rows,
   Result.
 
-get_pseudonym_mysql(PublicKey) ->
+get_pseudonym_rel(PublicKey) ->
   lager:info("MySQL:load pseudonym"),
   {ok, Pid} = get_mysql_link(),
   %{ok, ColumnNames, Rows}
@@ -188,6 +246,16 @@ save_message_mnesia(Signature, PublicKey, TT) ->
   lager:info("Mnesia:save message"),
   Message = #message{signature = Signature, public_key = PublicKey, timestamp = TT},
   mnesia:dirty_write(Message).
+
+save_candidate_pool_mnesia(Signature, PublicKey, Hash, Message, Fee, TT) ->
+  lager:info("Mnesia:save candidate pool"),
+  Candidate = #candidate{signature = Signature, public_key = PublicKey, hash = Hash, message = Message, fee = Fee, tt = TT, tt_mined = -1},
+  mnesia:dirty_write(Candidate).
+
+save_candidate_log_mnesia(Signature, PublicKey, Hash, Message, Fee, TT, Mined) ->
+  lager:info("Mnesia:save candidate log"),
+  Candidate = #candidate{signature = Signature, public_key = PublicKey, hash = Hash, message = Message, fee = Fee, tt = TT, tt_mined = Mined},
+  mnesia:dirty_write(Candidate).
 
 get_pseudonym_mnesia(PublicKey) ->
   % TODO

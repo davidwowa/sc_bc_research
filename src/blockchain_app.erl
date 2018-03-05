@@ -88,4 +88,6 @@ install_mnesia_tables() ->
     {ram_copies, [node()]}]),
   mnesia:create_table(message, [{attributes, record_info(fields, message)},
     {ram_copies, [node()]}]),
+  mnesia:create_table(candidate, [{attributes, record_info(fields, candidate)},
+    {ram_copies, [node()]}]),
   ok.

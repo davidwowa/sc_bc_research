@@ -61,13 +61,25 @@ handle_data(Json, <<"load">>) ->
   Result = db_utils:get_pseudonym(PublicKey),
   Doc = {[{load, [guid, Result#pseudonym.guid, public_key, Result#pseudonym.public_key, ip, Result#pseudonym.ip, value, Result#pseudonym.value, tt, Result#pseudonym.timestamp]}]},
   jsone:encode(Doc);
+handle_data(Json, <<"tx">>) ->
+  Map = jsone:decode(Json),
+  PublicKey = maps:get(<<"publicKey">>, Map),
+  Signature = maps:get(<<"signature">>, Map),
+  TT = time_utils:current_timestamp(),
+  Value = maps:get(<<"value">>, Map),
+  %TODO here next, problem with hash length in db, make hash direct
+  Hash = hash_utils:base64checkHashFrom(Json),
+  Doc = {[{tx_hash, [tx_hash, Hash]}]},
+  %TODO DANGER!
+  db_utils:save_candidate_pool(Signature, PublicKey, Hash, Json, Value, TT),
+  jsone:encode(Doc);
 handle_data(Json, _) ->
   %TODO
   lager:error(Json),
   lager:error("ERROR: wrong message from client").
 
 mining() ->
-  R = db_utils:get_condidates_numer(),
+  R = db_utils:get_candidates_number(),
   if
     R >= 5 -> run_mining();
     true -> lager:info("Mining:nothing to do")

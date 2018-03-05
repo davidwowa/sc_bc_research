@@ -38,6 +38,7 @@ DROP TABLE IF EXISTS `candidates_pool`;
 CREATE TABLE `candidates_pool` (
   `signature` VARCHAR(256)   NOT NULL,
   `bcaddress` VARCHAR(182)   NOT NULL,
+  `hash`      VARCHAR(125)   NOT NULL,
   `message`   VARCHAR(32765) NOT NULL,
   `fee`       BIGINT DEFAULT 0,
   `tt`        VARCHAR(30)    NOT NULL,
@@ -50,6 +51,7 @@ DROP TABLE IF EXISTS `candidates_log`;
 CREATE TABLE `candidates_log` (
   `signature` VARCHAR(256)   NOT NULL,
   `bcaddress` VARCHAR(182)   NOT NULL,
+  `hash`      VARCHAR(125)   NOT NULL,
   `message`   VARCHAR(32765) NOT NULL,
   `fee`       BIGINT DEFAULT 0,
   `tt`        VARCHAR(30)    NOT NULL,

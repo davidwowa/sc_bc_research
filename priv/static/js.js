@@ -70,6 +70,8 @@ socket.onmessage = function (messageEvent) {
         document.getElementById("deposit").innerHTML = obj.load[9];
     } else if (obj.hasOwnProperty('signforsend')) {
         document.getElementById("signatureToRecipientArrea").innerHTML = obj.signforsend[1];
+    } else if (obj.hasOwnProperty('tx_hash')) {
+        document.getElementById("message").innerHTML = "TX Hash " + obj.tx_hash[1];
     }
     else {
         log_this("ERROR " + obj, 1);
@@ -194,7 +196,19 @@ function rec_verify(ce) {
 
 function rec_send(ce) {
     log_this("user clicked " + ce, 0);
-    // TODO
+    if (socket.readyState == socket.OPEN) {
+        var publicKey1 = document.getElementById("publicKey").value;
+        var signature1 = document.getElementById("signatureToRecipientArrea").value;
+        var message1 = document.getElementById("messageToRecipient").value;
+        var value = document.getElementById("recipientValue").value;
+
+        var msg = {messageKey: "tx", publicKey: publicKey1, signature: signature1, value: value, message: message1};
+
+        log_this(JSON.stringify(msg, null, 2), 0);
+        socket.send(JSON.stringify(msg));
+    } else {
+        log_this('websocket is not connected', 1);
+    }
 }
 
 // utils
