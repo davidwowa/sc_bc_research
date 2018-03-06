@@ -14,19 +14,22 @@
 -export([sha512HashTo/1]).
 -export([signMessageWith/2]).
 -export([verifyMessage/3]).
+-export([generate_key_paar_256k1/0]).
 
 generate_key_paar() ->
-  lager:info("generate simple key paar over secp512r1 curve"),
-  %%{PublicKey, PrivKeyOut} =
-  crypto:generate_key(ecdh, getEcdhParams()).
+  crypto:generate_key(ecdh, getEcdhParams521r1()).
+
+generate_key_paar_256k1() ->
+  crypto:generate_key(ecdh, getEcdhParams256k1()).
 
 sha512HashTo(Message) when is_binary(Message) -> crypto:hash(getHash(), Message).
 
 signMessageWith(PrivKeyOut, Message) ->
-  crypto:sign(ecdsa, sha512, Message, [PrivKeyOut, getEcdhParams()]).
+  crypto:sign(ecdsa, sha512, Message, [PrivKeyOut, getEcdhParams521r1()]).
 
 verifyMessage(Signature, Message, PublicKey) ->
-  crypto:verify(ecdsa, sha512, Message, Signature, [PublicKey, getEcdhParams()]).
+  crypto:verify(ecdsa, sha512, Message, Signature, [PublicKey, getEcdhParams521r1()]).
 
 getHash() -> sha512.
-getEcdhParams() -> crypto:ec_curve(secp521r1).
+getEcdhParams521r1() -> crypto:ec_curve(secp521r1).
+getEcdhParams256k1() -> crypto:ec_curve(secp256k1).

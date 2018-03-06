@@ -35,7 +35,7 @@ docker build --build-arg password=pass --no-cache=true -t debian:erlang1 .
 
 #For me
 [Erlang Book Author Blog](https://ferd.ca/)  
-
+[Cryptographic Key Length Recommendation](https://www.keylength.com/en/)  
 ##Byte and Bit Calculation
 ```
 %% bits

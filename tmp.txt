@@ -1,2 +1,5 @@
 MIGIAkIBzGibQXdkFW5JLpYLhgEJWsiP5JuvMOgyC5lXG2fgbG8JgPP0IW3qdPon3uDYvwetSRDYlTcDaLpA/VJkq8yeavMCQgGnaaAvVPJ2lrDTlR9VF+ldRgMt0pmJF36nQyHVjIrLnc8zCHi/ZGeyoBhGrctGGI9HS6S8atXsfU8kaDmfa0W1UA==
 MIGHAkFs9L9R94Euzpqxyl/c95/GEIVNvBB6QAFNv/7NNhHWtQpMi+3ajiEZNdGTXXSd+dvFYMKCJQRjXD15IWWLLPdYCAJCAbACYIUSEXilpb/YiN5MOBBOFbwLWqfFs8U1IaKpHK5BWsE4d4YErvEmHKxz5bhRhgI5+KGhjTw9ArsAj6zPz8yX
+
+  %%lager:info("generate simple key paar over secp512r1 curve"),
+  %%{PublicKey, PrivKeyOut} =
