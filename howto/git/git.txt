@@ -19,3 +19,5 @@ git revert <commit 1> <commit 2>
 git clean -f
 //Or untracked directories (e.g., new or automatically generated directories):
 git clean -fd
+
+git config --global core.autocrlf true
