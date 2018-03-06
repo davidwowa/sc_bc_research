@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# TODO make it ready for windows
+
 docker network ls
 echo -n "enter docker network name:"
 read -r network_name
