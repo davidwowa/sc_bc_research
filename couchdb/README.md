@@ -8,9 +8,13 @@ docker build -t couchserver .
 docker network create testnetwork
 `
 3. Run container with  
-**Unix:**  
+**OSX:**  
 `
 docker run -ti -p 5984:5984 --name couchserver1 -v /Users/David/sandbox/chouchdb:/opt/couchdb/data -d --net testnetwork couchserver
+`  
+**RPI:**(no container for arm available)    
+`
+docker run -ti -p 5984:5984 --name couchserver1 -v /home/pi/sandbox/chouchdb:/opt/couchdb/data -d --net testnetwork couchserver
 `  
 **Windows:**  
 `

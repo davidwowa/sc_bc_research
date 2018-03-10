@@ -13,9 +13,13 @@ docker build -t mysqlserver .
 docker network create testnetwork
 `
 4. Run container with  
-**Unix:**  
+**OSX:**  
 `
 docker run -ti -p 3306:3306 --name mysqlserver1 -v /Users/David/sandbox/mysql:/var/lib/mysql -d --net testnetwork mysqlserver
+`  
+**RPI:**  
+`
+docker run -ti -p 3306:3306 --name mysqlserver1 -v /home/pi/David/sandbox/mysql:/var/lib/mysql -d --net testnetwork mysqlserver
 `  
 **Windows:**  
 [Problem if db data is stored local](https://stackoverflow.com/questions/48239668/fails-to-initialize-mysql-database-on-windows-10?noredirect=1&lq=1)  
