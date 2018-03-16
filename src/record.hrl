@@ -2,4 +2,4 @@
 -record(block, {p_hash, hash, merkle_root, data, timestamp}).
 -record(key, {private_key, public_key, timestamp}).
 -record(message, {public_key, signature, timestamp}).
--record(candidate, {signature, public_key, hash, message, fee, tt, tt_mined}).
+-record(candidate, {signature, public_key, hash, message, value, tt, tt_mined}).

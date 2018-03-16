@@ -79,10 +79,16 @@ handle_data(Json, _) ->
   lager:error("ERROR: wrong message from client").
 
 mining() ->
-  R = db_utils:get_candidates_number(),
+  R = db_utils:get_messages_candidates_number(),
+  lager:info("found ~p messages", [R]),
   if
     R >= 5 -> run_mining();
     true -> lager:info("Mining:nothing to do")
   end.
 
-run_mining() -> lager:info("Mining: mining...").
+run_mining() -> lager:info("Mining: mining..."),
+  Rows = db_utils:get_messages_candidates(),
+  mine(Rows).
+
+mine(Rows) -> lager:info("mine...")
+  .
