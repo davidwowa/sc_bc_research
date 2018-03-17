@@ -56,6 +56,7 @@ setup_cowboy() ->
   %%websocket_sup:start_link(),
   % check database for block mining
   timer:apply_interval(5000, logic, mining, []),
+  p2p:start_server(),
   ok.
 
 setup_mnesia() ->

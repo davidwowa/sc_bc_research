@@ -12,16 +12,20 @@ rm rebar.lock
 #echo "rebar update"
 #~/git/rebar3/rebar3 update
 
+echo "rebar auto"
+~/git/rebar3/rebar3 auto
+
 #echo "rebar auto"
-#~/git/rebar3/rebar3 auto
+#DEBUG=1 ~/git/rebar3/rebar3 auto
+
 
 #echo "compile"
-~/git/rebar3/rebar3 get-deps compile
+#~/git/rebar3/rebar3 get-deps compile
 
 #echo "tree"
 #~/git/rebar3/rebar3 tree
 
-echo "run"
-~/git/rebar3/rebar3 run
+#echo "run"
+#~/git/rebar3/rebar3 run
 
 echo "end"

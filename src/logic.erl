@@ -36,7 +36,9 @@ handle_data(Json, <<"sign">>) ->
   TT = time_utils:current_timestamp(),
   db_utils:save_message(base64:encode(Signature), PublicKey, TT),
   Doc = {[{sign, [sign, base64:encode(Signature), tt, TT]}]},
-  jsone:encode(Doc);
+  JsonDoc = jsone:encode(Doc),
+  p2p:send(JsonDoc),
+  JsonDoc;
 handle_data(Json, <<"signforsend">>) ->
   Map = jsone:decode(Json),
   Message = maps:get(<<"message">>, Map),
@@ -46,7 +48,9 @@ handle_data(Json, <<"signforsend">>) ->
   TT = time_utils:current_timestamp(),
   db_utils:save_message(base64:encode(Signature), PublicKey, TT),
   Doc = {[{signforsend, [signforsend, base64:encode(Signature), tt, TT]}]},
-  jsone:encode(Doc);
+  JsonDoc = jsone:encode(Doc),
+  p2p:send(JsonDoc),
+  JsonDoc;
 handle_data(Json, <<"verify">>) ->
   Map = jsone:decode(Json),
   Message = maps:get(<<"message">>, Map),
@@ -54,13 +58,17 @@ handle_data(Json, <<"verify">>) ->
   Signature = maps:get(<<"signature">>, Map),
   Value = crypto_utils:verifyMessage(base64:decode(Signature), Message, base64:decode(PublicKey)),
   Doc = {[{verify, [verify, Value]}]},
-  jsone:encode(Doc);
+  JsonDoc = jsone:encode(Doc),
+  p2p:send(JsonDoc),
+  JsonDoc;
 handle_data(Json, <<"load">>) ->
   Map = jsone:decode(Json),
   PublicKey = maps:get(<<"public_key">>, Map),
   Result = db_utils:get_pseudonym(PublicKey),
   Doc = {[{load, [guid, Result#pseudonym.guid, public_key, Result#pseudonym.public_key, ip, Result#pseudonym.ip, value, Result#pseudonym.value, tt, Result#pseudonym.timestamp]}]},
-  jsone:encode(Doc);
+  JsonDoc = jsone:encode(Doc),
+  p2p:send(JsonDoc),
+  JsonDoc;
 handle_data(Json, <<"tx">>) ->
   Map = jsone:decode(Json),
   PublicKey = maps:get(<<"publicKey">>, Map),
@@ -72,7 +80,9 @@ handle_data(Json, <<"tx">>) ->
   Doc = {[{tx_hash, [tx_hash, Hash]}]},
   %TODO DANGER!
   db_utils:save_candidate_pool(Signature, PublicKey, Hash, Json, Value, TT),
-  jsone:encode(Doc);
+  JsonDoc = jsone:encode(Doc),
+  p2p:send(JsonDoc),
+  JsonDoc;
 handle_data(Json, _) ->
   %TODO
   lager:error(Json),
@@ -80,15 +90,24 @@ handle_data(Json, _) ->
 
 mining() ->
   R = db_utils:get_messages_candidates_number(),
-  lager:info("found ~p messages", [R]),
+  %%lager:info("found ~p messages", [R]),
+  run_mining(),
   if
     R >= 5 -> run_mining();
     true -> lager:info("Mining:nothing to do")
   end.
 
-run_mining() -> lager:info("Mining: mining..."),
+run_mining() ->
+  %%lager:info("Mining: mining..."),
   Rows = db_utils:get_messages_candidates(),
+  show_messages(Rows, 0),
   mine(Rows).
 
-mine(Rows) -> lager:info("mine...")
+show_messages([], Counter) -> lager:info("counter ~p", [Counter]);
+show_messages([H|T], Counter)->
+  %%lager:info("show H ~p", [H]),
+  show_messages(T, Counter + 1).
+
+mine(Rows) ->
+  lager:info("mine... TODO")
   .

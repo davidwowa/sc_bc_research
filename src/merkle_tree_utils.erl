@@ -1,5 +1,5 @@
 %%%-------------------------------------------------------------------
-%%% @author David
+%%% @author David Zakrevskyy
 %%% @copyright (C) 2018, <COMPANY>
 %%% @doc
 %%%
@@ -11,3 +11,4 @@
 
 %% API
 -export([]).
+

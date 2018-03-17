@@ -16,6 +16,12 @@ dpkg-query -l
 //SCREEN
 // create new screen
 screen
+// create new screen with name foo
+screen -S foo
+// to reattach it
+screen -r foo
+// to multi display mode
+screen -x foo
 Ctrl + A then D // detach new screen
 screen -r // get detached screen
 

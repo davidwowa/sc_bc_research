@@ -223,7 +223,7 @@ get_pseudonym_rel(PublicKey) ->
 get_messages_rel()->
   lager:info("MySQL: load messages to mine"),
   {ok, Pid} = get_mysql_link(),
-  {ok, _, Rows} = mysql:query(Pid, <<"SELECT * FROM messages">>),
+  {ok, _, Rows} = mysql:query(Pid, <<"SELECT * FROM candidates_pool">>),
   Rows.
 
 create_pseudonym([[GUID, Bcaddress, Ip, Value, TT]]) ->
