@@ -1,3 +1,6 @@
+// run terminal as admin (in other window)
+Start-Process powershell -Verb runAs
+
 // FILESYSTEM
 rm -fo -r folder // delete folder recursiv
 
@@ -9,3 +12,12 @@ Stop-Process -name java
 
 // set path
 set PATH=%PATH%;"C:\Program Files\erl9.2\bin"
+
+// open port
+netsh advfirewall firewall add rule name="Open Port 8789" dir=in action=allow protocol=TCP localport=8789
+// delete rule for port
+netsh advfirewall firewall delete rule name="Open Port 8789"
+// rename hostname
+sysdm.cpl
+//
+services.msc
