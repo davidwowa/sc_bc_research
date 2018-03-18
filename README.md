@@ -29,8 +29,17 @@ Yet no solution available!!
 3. Websockets connection
 
 ##Docker
+1. Build container  
 `
 docker build --build-arg password=pass --no-cache=true -t debian:erlang1 .
+`
+2. Create network  
+`
+docker network create testnetwork
+`
+3. Run container  
+`
+docker run -ti -p 5555:5555 --name bc --net testnetwork debian:erlang1
 `
 
 #For me
