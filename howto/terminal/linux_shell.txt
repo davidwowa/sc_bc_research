@@ -48,6 +48,8 @@ set number
 Number of Files in Folder
 ls -l | wc -l
 for file in .[^.]*; do rm "$file"; done
+//SEARCH
+find . -name "*poster*"
 
 // 
 
