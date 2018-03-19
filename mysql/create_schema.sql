@@ -60,6 +60,3 @@ CREATE TABLE `candidates_log` (
 )
   ENGINE = InnoDB
   CHARACTER SET latin1;
-
-#`tt` VARCHAR(30) NOT NULL,
-#ALTER TABLE table_name ADD column_name datatype;

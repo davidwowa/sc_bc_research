@@ -1,5 +1,7 @@
 @ECHO ON
 
+echo "stop docker container"
+docker stop bc
 echo "stop couchDB server on port 5984"
 docker stop couchserver1
 echo "stop MySQL server on port 3306"

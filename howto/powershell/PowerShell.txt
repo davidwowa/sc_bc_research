@@ -21,3 +21,10 @@ netsh advfirewall firewall delete rule name="Open Port 8789"
 sysdm.cpl
 //
 services.msc
+
+// && in powershell
+(command) -and (command)
+
+// Users
+// Get all users
+Get-WmiObject -Class Win32_UserAccount

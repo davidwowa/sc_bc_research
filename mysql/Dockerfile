@@ -9,4 +9,7 @@ ENV MYSQL_PASSWORD blockchain
 
 COPY create_schema.sql /docker-entrypoint-initdb.d/create_schema.sql
 
+#has no effect
+#VOLUME //C/Users/wdzak/sandbox/mysql
+
 EXPOSE 3306
