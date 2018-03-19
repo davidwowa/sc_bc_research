@@ -1,5 +1,5 @@
 #!/bin/bash
-
+#TODO fixme, unix files should not be edited in windows
 echo "stop docker container"
 docker stop bc
 echo "stop couchDB server on port 5984"
