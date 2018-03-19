@@ -45,6 +45,7 @@ docker run -ti -p 5555:5555 --name bc --net testnetwork debian:erlang1
 #For me
 [Erlang Book Author Blog](https://ferd.ca/)  
 [Cryptographic Key Length Recommendation](https://www.keylength.com/en/)  
+[What is SOLID?](http://clean-code-developer.de/weitere-infos/solid/)  
 ##Byte and Bit Calculation
 ```
 %% bits

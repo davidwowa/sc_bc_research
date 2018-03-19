@@ -1,5 +1,5 @@
 #Tendermint workflow
-
+[Docker description here](https://tendermint.readthedocs.io/en/master/tools/docker.html)  
 ##Docker
 0. Get containers  
 `
@@ -26,7 +26,12 @@ This should be normal way
 `
 docker run --rm -p 46657:46657 --name tendermint_bc -v "C:/Users/wdzak/sandbox/tendermind/tmdata:/tendermint" tendermint/tendermint init
 `  
-
+`
+docker run --rm -v "C:/Users/wdzak/sandbox/tendermind/tmdata:/tendermint" tendermint/tendermint show_validator
+`  
+`
+docker run --rm -d -v "C:/Users/wdzak/sandbox/tendermind/tmdata:/tendermint" tendermint/tendermint node
+`
 2. Logs  
 `
 docker logs tendermint_bc
