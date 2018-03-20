@@ -8,11 +8,11 @@ del rebar.lock
 
 echo %cd%
 
-C:\Users\wdzak\git\rebar3\_build\default\bin\rebar3.cmd update
-C:\Users\wdzak\git\rebar3\_build\default\bin\rebar3.cmd clean
+REM C:\Users\wdzak\git\rebar3\_build\default\bin\rebar3.cmd update
+REM C:\Users\wdzak\git\rebar3\_build\default\bin\rebar3.cmd clean
 C:\Users\wdzak\git\rebar3\_build\default\bin\rebar3.cmd auto
-C:\Users\wdzak\git\rebar3\_build\default\bin\rebar3.cmd compile
-C:\Users\wdzak\git\rebar3\_build\default\bin\rebar3.cmd tree
-C:\Users\wdzak\git\rebar3\_build\default\bin\rebar3.cmd release
-C:\Users\wdzak\git\rebar3\_build\default\bin\rebar3.cmd run
+REM C:\Users\wdzak\git\rebar3\_build\default\bin\rebar3.cmd compile
+REM C:\Users\wdzak\git\rebar3\_build\default\bin\rebar3.cmd tree
+REM C:\Users\wdzak\git\rebar3\_build\default\bin\rebar3.cmd release
+REM C:\Users\wdzak\git\rebar3\_build\default\bin\rebar3.cmd run
 echo end

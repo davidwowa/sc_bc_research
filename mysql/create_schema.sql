@@ -43,9 +43,7 @@ CREATE TABLE `candidates_pool` (
   `fee`       BIGINT DEFAULT 0,
   `tt`        VARCHAR(30)    NOT NULL,
   PRIMARY KEY (`signature`)
-)
-  ENGINE = InnoDB
-  CHARACTER SET latin1;
+);
 
 DROP TABLE IF EXISTS `candidates_log`;
 CREATE TABLE `candidates_log` (
@@ -57,6 +55,4 @@ CREATE TABLE `candidates_log` (
   `tt`        VARCHAR(30)    NOT NULL,
   `tt_mined`  VARCHAR(30)    NOT NULL,
   PRIMARY KEY (`signature`)
-)
-  ENGINE = InnoDB
-  CHARACTER SET latin1;
+);
