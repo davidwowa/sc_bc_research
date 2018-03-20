@@ -1,5 +1,6 @@
 DROP TABLE IF EXISTS `chain`;
 CREATE TABLE `chain` (
+  `nr`          BIGINT NOT NULL,
   `p_hash`      VARCHAR(125) NOT NULL,
   `bchash`      VARCHAR(125) NOT NULL,
   `merkle_root` VARCHAR(125) NOT NULL,
