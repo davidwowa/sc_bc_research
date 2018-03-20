@@ -71,7 +71,7 @@ get_pseudonym(PublicKey) ->
 get_messages_candidates_number() ->
   get_messages_candidates_number_rel().
 
-get_messages_candidates()->
+get_messages_candidates() ->
   get_messages_rel().
 
 % File
@@ -79,6 +79,7 @@ save_pseudonym_file(GUID, PublicKey, Ip, Value, TT) ->
   lager:info("File:save pseudonym"),
   Doc = #{guid => GUID, public_key => PublicKey, ip => Ip, value => Value, timestamp => TT},
   Json = jsone:encode(Doc),
+  lager:info("write in file ~p", [Json]),
   file:write_file(get_file_name_pseudonyms(), io_lib:fwrite("~p.\n", [Json]), [append]).
 
 save_keys_file(PublicKey, PrivateKey, TT) ->
@@ -111,12 +112,32 @@ save_candidate_log_file(Signature, PublicKey, Hash, Message, Fee, TT, Mined) ->
   Json = jsone:encode(Doc),
   file:write_file(get_file_name_candidates_log(), io_lib:fwrite("~p.\n", [Json]), [append]).
 
-get_file_name_pseudonyms() -> "/Users/David/sandbox/mt/bc/db/pseudonyms.db".
-get_file_name_keys() -> "/Users/David/sandbox/mt/bc/db/keys.db".
-get_file_name_blocks() -> "/Users/David/sandbox/mt/bc/db/blocks.db".
-get_file_name_messages() -> "/Users/David/sandbox/mt/bc/db/messages.db".
-get_file_name_candidates_pool() -> "/Users/David/sandbox/mt/bc/db/candidates_pool.db".
-get_file_name_candidates_log() -> "/Users/David/sandbox/mt/bc/db/candidates_log.db".
+get_file_name_pseudonyms() ->
+  get_os_type("sandbox/mt/bc/db/pseudonyms.db").
+get_file_name_keys() ->
+  get_os_type("sandbox/mt/bc/db/keys.db").
+get_file_name_blocks() ->
+  get_os_type("sandbox/mt/bc/db/blocks.db").
+get_file_name_messages() ->
+  get_os_type("sandbox/mt/bc/db/messages.db").
+get_file_name_candidates_pool() ->
+  get_os_type("sandbox/mt/bc/db/candidates_pool.db").
+get_file_name_candidates_log() ->
+  get_os_type("sandbox/mt/bc/db/candidates_log.db").
+
+get_os_type(FilePath) ->
+  {OS_name, _} = os:type(),
+  case OS_name of
+    unix ->
+      PathSep = "~/",
+      PathSep ++ FilePath;
+    win32 ->
+      PathSep = "%HOMEDRIVE%",
+      NewList = re:replace(FilePath, "/", "\\", [{return, list}]),
+      PathSep ++ NewList;
+    _Else ->
+      lager:info("error on os type")
+  end.
 
 % CouchDB
 save_pseudonym_couch(GUID, PublicKey, Ip, Value, TT) ->
@@ -220,7 +241,7 @@ get_pseudonym_rel(PublicKey) ->
     mysql:query(Pid, <<"SELECT * FROM pseudonyms WHERE bcaddress = ?">>, [PublicKey]),
   create_pseudonym(Rows).
 
-get_messages_rel()->
+get_messages_rel() ->
   lager:info("MySQL: load messages to mine"),
   {ok, Pid} = get_mysql_link(),
   {ok, _, Rows} = mysql:query(Pid, <<"SELECT * FROM candidates_pool">>),

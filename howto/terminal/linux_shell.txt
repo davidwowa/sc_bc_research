@@ -42,6 +42,8 @@ set number
 // :48 go to linenumber 48
 // go to end of file Shift G after Esc
 :set ruler
+// convert between windows and unix
+:set ff=unix
 
 // FILES AND FOLDERS
 Number of Files in Folder
