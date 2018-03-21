@@ -113,28 +113,27 @@ save_candidate_log_file(Signature, PublicKey, Hash, Message, Fee, TT, Mined) ->
   file:write_file(get_file_name_candidates_log(), io_lib:fwrite("~p.\n", [Json]), [append]).
 
 get_file_name_pseudonyms() ->
-  get_os_type("sandbox/mt/bc/db/pseudonyms.db").
+  get_os_type("/sandbox/mt/bc/db/pseudonyms.db").
 get_file_name_keys() ->
-  get_os_type("sandbox/mt/bc/db/keys.db").
+  get_os_type("/sandbox/mt/bc/db/keys.db").
 get_file_name_blocks() ->
-  get_os_type("sandbox/mt/bc/db/blocks.db").
+  get_os_type("/sandbox/mt/bc/db/blocks.db").
 get_file_name_messages() ->
-  get_os_type("sandbox/mt/bc/db/messages.db").
+  get_os_type("/sandbox/mt/bc/db/messages.db").
 get_file_name_candidates_pool() ->
-  get_os_type("sandbox/mt/bc/db/candidates_pool.db").
+  get_os_type("/sandbox/mt/bc/db/candidates_pool.db").
 get_file_name_candidates_log() ->
-  get_os_type("sandbox/mt/bc/db/candidates_log.db").
+  get_os_type("/sandbox/mt/bc/db/candidates_log.db").
 
 get_os_type(FilePath) ->
   {OS_name, _} = os:type(),
+  {ok, [[HomePath]]} = init:get_argument(home),
   case OS_name of
     unix ->
-      PathSep = "~/",
-      PathSep ++ FilePath;
+      HomePath ++ FilePath;
     win32 ->
-      PathSep = "%HOMEDRIVE%",
-      NewList = re:replace(FilePath, "/", "\\", [{return, list}]),
-      PathSep ++ NewList;
+      Result = HomePath ++ FilePath,
+      re:replace(Result, "/", "\\", [{return, list}]);
     _Else ->
       lager:info("error on os type")
   end.
