@@ -3,6 +3,8 @@ Start-Process powershell -Verb runAs
 
 // FILESYSTEM
 rm -fo -r folder // delete folder recursiv
+// create new file
+new-item candidates_log.db -ItemType file
 
 // less errors 
 du 2> $null
