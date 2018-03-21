@@ -27,7 +27,7 @@ loop(Socket) ->
   receive
     {udp, Socket, Host, Port, _} = Msg ->
       lager:info("p2p: server received:~p~n", [Msg]),
-      %% TODO
+      %% TODO more consens
       Doc = {[{message, [message, ok, ticket, rand:uniform(1000)]}]},
       JsonDoc = jsone:encode(Doc),
       gen_udp:send(Socket, Host, Port, JsonDoc),
@@ -35,13 +35,20 @@ loop(Socket) ->
   end.
 
 send(Message) ->
-  {ok, Addr} = inet:getaddrs("HP", inet),
-  {ok, Addrs} = inet:getaddrs("mac", inet),
-  send_rec(Addr, Message),
-  send_rec(Addrs, Message).
+  {ok, MyHostname} = inet:gethostname(),
+  case MyHostname of
+    "mac" ->
+      {ok, HP} = inet:getaddrs("HP", inet),
+      send_rec(HP, Message);
+    "HP" ->
+      {ok, Mac} = inet:getaddrs("mac", inet),
+      send_rec(Mac, Message);
+    _Else ->
+      lager:info("please configure hostname ~p ", [MyHostname])
+  end.
 
 send_rec([], _) -> lager:info("p2p: nothing to send, list is empty");
-send_rec([H | T], Message) -> lager:info("p2p: send message ~p to ~p ", [Message, H]),
+send_rec([H | T], Message) -> lager:info("p2p: send message to ~p ", [H]),
   {ok, Socket} = gen_udp:open(0, [binary]),
   ok = gen_udp:send(Socket, H, get_port(), term_to_binary(Message)),
   Value = receive

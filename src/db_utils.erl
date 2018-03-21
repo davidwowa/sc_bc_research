@@ -79,7 +79,6 @@ save_pseudonym_file(GUID, PublicKey, Ip, Value, TT) ->
   lager:info("File:save pseudonym"),
   Doc = #{guid => GUID, public_key => PublicKey, ip => Ip, value => Value, timestamp => TT},
   Json = jsone:encode(Doc),
-  lager:info("write in file ~p", [Json]),
   file:write_file(get_file_name_pseudonyms(), io_lib:fwrite("~p.\n", [Json]), [append]).
 
 save_keys_file(PublicKey, PrivateKey, TT) ->
