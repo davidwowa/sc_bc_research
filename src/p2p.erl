@@ -25,8 +25,10 @@ server(Port) ->
 
 loop(Socket) ->
   receive
-    {udp, Socket, Host, Port, _} = Msg ->
+    {udp, Socket, Host, Port, Payload} = Msg ->
       lager:info("p2p: server received:~p~n", [Msg]),
+      PayloadJsone = jsone:encode(Payload),
+      lager:info("recieved message from ~p ~p", [Host, PayloadJsone]),
       %% TODO more consens
       Doc = {[{message, [message, ok, ticket, rand:uniform(1000)]}]},
       JsonDoc = jsone:encode(Doc),
