@@ -25,10 +25,8 @@ server(Port) ->
 
 loop(Socket) ->
   receive
-    {udp, Socket, Host, Port, Payload} = Msg ->
-      lager:info("p2p: server received:~p~n", [Msg]),
-      PayloadJsone = jsone:encode(Payload),
-      lager:info("recieved message from ~p ~p", [Host, PayloadJsone]),
+    {udp, Socket, Host, Port, Payload} ->
+      lager:info("recieved message from: ~p ~s", [Host, Payload]),
       %% TODO more consens
       Doc = {[{message, [message, ok, ticket, rand:uniform(1000)]}]},
       JsonDoc = jsone:encode(Doc),
@@ -53,15 +51,15 @@ send_rec([], _) -> lager:info("p2p: nothing to send, list is empty");
 send_rec([H | T], Message) -> lager:info("p2p: send message to ~p ", [H]),
   {ok, Socket} = gen_udp:open(0, [binary]),
   ok = gen_udp:send(Socket, H, get_port(), term_to_binary(Message)),
-  Value = receive
-            {udp, Socket, _, _, Bin} = Msg ->
-              lager:info("p2p: client received:~p~n", [Msg]),
-              binary_to_term(Bin)
-          after 2000 ->
-      0
-          end,
+  receive
+    {udp, Socket, Host, _, Bin} = Msg ->
+      lager:info("p2p: client received:~p ~s", [Host, Bin]),
+      binary_to_term(Bin)
+  after 2000 ->
+    lager:info("timeout..."),
+    0
+  end,
   gen_udp:close(Socket),
-  lager:info("p2p: send result ~p", [Value]),
   send_rec(T, Message).
 
 get_port() -> 8789.

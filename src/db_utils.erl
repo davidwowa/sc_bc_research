@@ -224,7 +224,6 @@ save_candidate_log_rel(Signature, PublicKey, Hash, Message, Fee, TT, Mined) ->
   mysql:query(Pid, "INSERT INTO candidates_pool (signature, bcaddress, hash, message, fee, tt, tt_mined) VALUES (?, ?, ?, ?, ?, ?, ?)", [Signature, PublicKey, Hash, Message, Fee, TT, Mined]).
 
 get_messages_candidates_number_rel() ->
-  %lager:info("MySQL:load candidates number"),
   {ok, Pid} = get_mysql_link(),
   {ok, _, Rows} =
     mysql:query(Pid, <<"SELECT COUNT(*) FROM candidates_pool">>),
@@ -249,7 +248,6 @@ create_pseudonym([[GUID, Bcaddress, Ip, Value, TT]]) ->
   #pseudonym{guid = GUID, public_key = Bcaddress, ip = Ip, value = Value, timestamp = TT}.
 
 get_mysql_link() ->
-  %lager:info("link mysql connection"),
   mysql:start_link([{host, "localhost"}, {user, "block"},
     {password, "blockchain"}, {database, "blockchain"}]).
 
