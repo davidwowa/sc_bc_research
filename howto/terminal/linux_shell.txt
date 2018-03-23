@@ -1,6 +1,10 @@
 // CRYPTO
 echo MTI= | base64 --decode // 12
 echo 12 | base64 12 // MTI=
+openssl sha -sha256 filename
+
+// GEN ADDR IOTA
+cat /dev/urandom |LC_ALL=C tr -dc 'A-Z9' | fold -w 81 | head -n 1
 
 // SYSTEM
 sudo nano /etc/dphys-swapfile
@@ -82,3 +86,6 @@ nmap -sP 192.168.2.1/24
 arp -a -n
 
 sudo nmap -sP 192.168.1.0/24 | awk '/^Nmap/{ip=$NF}/B8:27:EB/{print ip}'
+
+// CALCULATING IN BASH
+echo "143.90+86.18+100+10" | bc -l
