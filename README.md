@@ -38,6 +38,7 @@ Yet no solution available!!
 [Erlang Book Author Blog](https://ferd.ca/)  
 [Cryptographic Key Length Recommendation](https://www.keylength.com/en/)  
 [What is SOLID?](http://clean-code-developer.de/weitere-infos/solid/)  
+[Real Time System Failures](https://c3.nasa.gov/dashlink/resources/624/)  
 ##Byte and Bit Calculation
 ```
 %% bits
