@@ -54,7 +54,7 @@ send_rec([H | T], Message) -> lager:info("p2p: send message to ~p ", [H]),
   receive
     {udp, Socket, Host, _, Bin} = Msg ->
       lager:info("p2p: client received:~p ~s", [Host, Bin]),
-      binary_to_term(Bin)
+      Bin
   after 2000 ->
     lager:info("timeout..."),
     0

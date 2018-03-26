@@ -37,6 +37,6 @@ websocket_terminate(_Reason, _Req, _State) ->
   ok.
 
 terminate(Reason, _Req, _State) ->
-  lager:info("terminate application"),
-  lager:info(Reason),
+  lager:error("terminate websocket connection"),
+  lager:error("websockets error ~p ", [Reason]),
   ok.
