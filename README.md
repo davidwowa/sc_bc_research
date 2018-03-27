@@ -5,6 +5,9 @@ An OTP application
 **1.** Check folder `couchdb` and `mysql` for docker preparation.
 **2.** Create Folder sandbox in your home folder
 **3.** Run `clean_compile_run.sh` on unix, or `clean_compile_run.sh` on windows, or build own docker container, see below.
+
+**TODO:** [GUI with wxErlang](http://www.idiom.com/~turner/wxtut/wxwidgets.html)  
+
 ##Docker
 1. Build container  
 `
@@ -19,10 +22,27 @@ docker network create testnetwork
 docker run -ti -p 5555:5555 --name bc --net testnetwork debian:erlang1
 `  
 
+## Key file generation with openssl and signing files
+
+**TODO**: Import for key-files created with openssl.
+
+**1.** Generate private key  
+Option `-noout` say that the arguments which are used for key generation, not in file written.  
+`openssl ecparam -genkey -name secp521r1 -noout -out private_key.pem`  
+`openssl ec -in private_key.pem -text -noout` print key in hex-format(only for private key files).  
+**2.** Generate public key  
+`openssl ec -in private_key.pem -pubout -out public_key.pem`  
+**3.** Sign message  
+`openssl dgst -sha512 -sign private_key.pem message.txt > signature.der`  
+With `hexdump signature.txt` you see signature file in hex-format.  
+Or for readable for humans file use:  
+`openssl dgst -sha512 -hex -sign private_key.pem message.txt > signature2.der`  
+**4.** Verify signature, message and public key  
+`openssl dgst -sha512 -verify public_key.pem -signature signature.der message.txt`
+
 #Why Erlang?
 [Why Erlang?](https://www.infoq.com/presentations/erlang-java-scala-go-c)  
 [WebPages with Chicago Boss](https://github.com/ChicagoBoss/ChicagoBoss/wiki/Quickstart)  
-GUI Programming with wxErlang
 
 #Current problems
 1. rebar3 integration in windows  

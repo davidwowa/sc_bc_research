@@ -3,3 +3,42 @@ MIGHAkFs9L9R94Euzpqxyl/c95/GEIVNvBB6QAFNv/7NNhHWtQpMi+3ajiEZNdGTXXSd+dvFYMKCJQRj
 
   %%lager:info("generate simple key paar over secp512r1 curve"),
   %%{PublicKey, PrivKeyOut} =
+
+
+// **********************OLD REMOVE IT**********************
+
+http://erlang.org/pipermail/erlang-questions/2013-July/074894.html
+
+// Erlang
+rr(public_key).
+
+// read private key
+{ok, Bin} = file:read_file("private_key.pem").
+
+// read public key
+{ok, Bin2} = file:read_file("public_key.pem").
+
+[OTPEcpkParamsPem, ECPrivateKeyPem] = public_key:pem_decode(Bin).
+ECPrivateKey = public_key:pem_entry_decode(ECPrivateKeyPem).
+
+// ???
+{_, ParamsBin, ParamsEnc} = OTPEcpkParamsPem.
+EcpkParametersPem = {'EcpkParameters', ParamsBin, ParamsEnc}.
+ECParams = public_key:pem_entry_decode(EcpkParametersPem).
+
+Msg = <<"The superhamster strikes again at 7PM">>.
+Sig = public_key:sign(Msg, sha256, ECPrivateKey).
+
+[SPKI] = public_key:pem_decode(Bin2).
+
+#'SubjectPublicKeyInfo'{algorithm = Der} = SPKI.
+
+RealSPKI = public_key:der_decode('SubjectPublicKeyInfo', Der).
+
+#'SubjectPublicKeyInfo'{subjectPublicKey = {_, Octets}} = RealSPKI.
+
+ECPoint = #'ECPoint'{point = Octets}.
+
+ECPublicKey = {ECPoint, ECParams}.
+
+public_key:verify(Msg, sha256, Sig, ECPublicKey).
