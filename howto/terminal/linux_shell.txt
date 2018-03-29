@@ -29,6 +29,8 @@ screen -x foo
 Ctrl + A then D // detach new screen
 screen -r // get detached screen
 
+watch -n3600 command args // every hour run command witch args
+
 // UNKNOWN
 Alias test='apt-get update usw'
 last
