@@ -56,6 +56,12 @@ for file in .[^.]*; do rm "$file"; done
 //SEARCH
 find . -name "*poster*"
 
+// FILE REPRESENTAION
+xxd -b filename // show file as binary table
+xxd filename // show file in HEX-Format
+xxd file | less // option less enable with enter scrolling
+hexdump // is alternative
+
 //
 #!/bin/bash
 while IFS='' read -r line || [[ -n "$line" ]]; do
@@ -89,3 +95,6 @@ sudo nmap -sP 192.168.1.0/24 | awk '/^Nmap/{ip=$NF}/B8:27:EB/{print ip}'
 
 // CALCULATING IN BASH
 echo "143.90+86.18+100+10" | bc -l
+
+// STRINGS IN TERMINAL
+grep -r 'balance' mist/
