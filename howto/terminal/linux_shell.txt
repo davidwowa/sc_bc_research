@@ -3,6 +3,9 @@ echo MTI= | base64 --decode // 12
 echo 12 | base64 12 // MTI=
 openssl sha -sha256 filename
 
+// GETH
+./geth --datadir /Volumes/HDD-777/eth/ --cache 51200 --verbosity 2 --trie-cache-gens 240
+
 // GEN ADDR IOTA
 cat /dev/urandom |LC_ALL=C tr -dc 'A-Z9' | fold -w 81 | head -n 1
 
@@ -30,6 +33,7 @@ Ctrl + A then D // detach new screen
 screen -r // get detached screen
 
 watch -n3600 command args // every hour run command witch args
+watch -n3600 ~/git/rpi_scripts/telegram/tg_send.sh "ETH current blockchain size $(du -sh ~/Library/Ethereum/geth/chaindata)"
 
 // UNKNOWN
 Alias test='apt-get update usw'
