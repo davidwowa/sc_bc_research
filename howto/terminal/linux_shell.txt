@@ -61,6 +61,8 @@ ls -l | wc -l
 for file in .[^.]*; do rm "$file"; done
 //SEARCH
 find . -name "*poster*"
+//Show disk usage
+df -h
 
 // FILE REPRESENTAION
 xxd -b filename // show file as binary table
