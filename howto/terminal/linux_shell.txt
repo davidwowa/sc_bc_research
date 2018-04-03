@@ -99,6 +99,9 @@ nmap --stats-every 1s gsgsgs.hopto.org
 nmap -sP 192.168.2.1/24
 arp -a -n
 
+// get ip addr
+curl ipinfo.io/ip
+
 sudo nmap -sP 192.168.1.0/24 | awk '/^Nmap/{ip=$NF}/B8:27:EB/{print ip}'
 
 // CALCULATING IN BASH
