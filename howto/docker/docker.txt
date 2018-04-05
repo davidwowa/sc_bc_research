@@ -26,6 +26,9 @@ docker volume ls
 docker volume rm volume_name volume_name
 docker stats // show docker system stats
 
+// SHOW DOCKER CONTAINER SIZES
+docker ps --size
+
 // DOCKER LOGS
 docker logs container_name
 

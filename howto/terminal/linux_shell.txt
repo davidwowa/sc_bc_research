@@ -63,6 +63,9 @@ for file in .[^.]*; do rm "$file"; done
 find . -name "*poster*"
 //Show disk usage
 df -h
+// date sort
+ls -t
+ls -rt
 
 // FILE REPRESENTAION
 xxd -b filename // show file as binary table
