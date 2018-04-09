@@ -5,6 +5,9 @@ Start-Process powershell -Verb runAs
 rm -fo -r folder // delete folder recursiv
 // create new file
 new-item candidates_log.db -ItemType file
+Get-Item C:\Users\wdzak\AppData\Local\Temp\NetTraces\NetTrace.etl).length/1KB
+Get-Item C:\Users\wdzak\AppData\Local\Temp\NetTraces\NetTrace.etl).length/1MB
+Get-Item C:\Users\wdzak\AppData\Local\Temp\NetTraces\NetTrace.etl).length/1GB
 
 // less errors 
 du 2> $null
@@ -23,6 +26,10 @@ netsh advfirewall firewall delete rule name="Open Port 8789"
 sysdm.cpl
 //
 services.msc
+// capture ... from here : https://isc.sans.edu/forums/diary/No+Wireshark+No+TCPDump+No+Problem/19409/
+netsh trace start capture=yes Ethernet.Type=IPv4  IPv4.Address=192.168.2.102
+
+
 
 // && in powershell
 (command) -and (command)
