@@ -30,7 +30,7 @@ docker run -ti -p 5555:5555 --name bc --net testnetwork debian:erlang1
 Option `-noout` say that the arguments which are used for key generation, not in file written.  
 `openssl ecparam -genkey -name secp521r1 -noout -out private_key.pem`  
 `openssl ec -in private_key.pem -text -noout` print key in hex-format(only for private key files).  
-Use `-passout pass:foobar` for password.  
+Use `-passout pass:foobar` for password __not with ec__.  
 **2.** __Generate public key__  
 `openssl ec -in private_key.pem -pubout -out public_key.pem`  
 **3.** __Sign message__  
