@@ -33,6 +33,9 @@ __Size__
 `Signature = crypto:sign(ecdsa, sha512, <<"test"">>, [PrivKeyOut, crypto:ec_curve(secp521r1)]).`  
 **3.** __Verify signature__  
 `crypto:verify(ecdsa, sha512, <<"test">>, Signature, [PublicKey, crypto:ec_curve(secp521r1)]).`  
+**4.** __Base64__  
+`bit_size(base64:encode(PublicKey)).` result 1440  
+`bit_size(base64:encode(PrivKeyOut)).` result 704
 
 ## Key file generation with openssl and signing files
 
