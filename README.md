@@ -22,6 +22,18 @@ docker network create testnetwork
 docker run -ti -p 5555:5555 --name bc --net testnetwork debian:erlang1
 `  
 
+## Key generation in erlang
+
+**1.** __Generate keys__  
+`{PublicKey, PrivKeyOut} = crypto:generate_key(ecdh, crypto:ec_curve(secp521r1)).`  
+__Size__  
+`bit_size(PublicKey).` give as result 1064  
+`bit_size(PrivKeyOut).` give as result 528  
+**2.** __Sign message__  
+`Signature = crypto:sign(ecdsa, sha512, <<"test"">>, [PrivKeyOut, crypto:ec_curve(secp521r1)]).`  
+**3.** __Verify signature__  
+`crypto:verify(ecdsa, sha512, <<"test">>, Signature, [PublicKey, crypto:ec_curve(secp521r1)]).`  
+
 ## Key file generation with openssl and signing files
 
 **TODO**: Import for key-files created with openssl.
