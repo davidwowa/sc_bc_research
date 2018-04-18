@@ -35,7 +35,10 @@ __Size__
 `crypto:verify(ecdsa, sha512, <<"test">>, Signature, [PublicKey, crypto:ec_curve(secp521r1)]).`  
 **4.** __Base64__  
 `bit_size(base64:encode(PublicKey)).` result 1440  
-`bit_size(base64:encode(PrivKeyOut)).` result 704
+`bit_size(base64:encode(PrivKeyOut)).` result 704  
+**5.** __RIPEMD160__  
+`crypto:hash(ripemd160, PubKey).` result in 160 bits  
+`crypto:hash(ripemd160, PrivKey).` result in 160 bits  
 
 ## Key file generation with openssl and signing files
 
