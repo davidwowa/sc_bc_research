@@ -12,15 +12,7 @@
 
 
 %% API
--export([tail_recursive_fib/1]).
+-export([add_to_list/2]).
 
-tail_recursive_fib(N) ->
-  tail_recursive_fib(N, 0, 1, []).
+add_to_list(List, Value) -> lists:append(List, Value).
 
-tail_recursive_fib(0, _Current, _Next, Fibs) ->
-  lists:reverse(Fibs);
-tail_recursive_fib(N, Current, Next, Fibs) ->
-  tail_recursive_fib(N - 1, Next, Current + Next, [Current|Fibs]).
-
-get_merkle_root([])-> lager:warn("list for merkle root is empty");
-get_merkle_root([H|T])-> crypto_utils:sha512HashTo(H++T).

@@ -39,8 +39,8 @@ __Size__
 **5.** __RIPEMD160__  
 `crypto:hash(ripemd160, PubKey).` result in 160 bits  
 `crypto:hash(ripemd160, PrivKey).` result in 160 bits  
-
-## Key file generation with openssl and signing files
+  
+## Key file generation with openssl and signing files  
 
 **TODO**: Import for key-files created with openssl.
 
@@ -64,6 +64,10 @@ Or for readable for humans file use:
 [WebPages with Chicago Boss](https://github.com/ChicagoBoss/ChicagoBoss/wiki/Quickstart)  
 
 #Current problems
+__Work on merkle tree implementation__  
+For List iteration `lists:foreach(fun (List_to_itteration) -> <<WWW:512/big-unsigned-integer>> = crypto:hash(sha512, [List_to_itteration]), Output = integer_to_list(WWW, 16), io:fwrite(Output), io:fwrite("\n") end, List).`  
+But no idea for creating new list on the fly, an add new hashes.
+
 **1.** __rebar3 integration in windows__  
 [Github Issue new](https://github.com/erlang/rebar3/pull/1689)  
 [Github Issue old](https://github.com/erlang/rebar3/issues/850)

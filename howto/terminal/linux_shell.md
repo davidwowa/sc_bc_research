@@ -1,43 +1,35 @@
-// CRYPTO
-echo MTI= | base64 --decode // 12
-echo 12 | base64 12 // MTI=
-openssl sha -sha256 filename
+#Crypto
+`echo MTI= | base64 --decode` // 12  
+`echo 12 | base64 12` // MTI=  
+`openssl sha -sha256 filename`  
+`echo -n "A" | openssl dgst -sha512`  
 
-// GETH
-./geth --datadir /Volumes/HDD-777/eth/ --cache 51200 --verbosity 2 --trie-cache-gens 240
+#GETH
+`./geth --datadir /Volumes/HDD-777/eth/ --cache 51200 --verbosity 2 --trie-cache-gens 240`  
 
-// GEN ADDR IOTA
-cat /dev/urandom |LC_ALL=C tr -dc 'A-Z9' | fold -w 81 | head -n 1
+#IOTA
+`cat /dev/urandom |LC_ALL=C tr -dc 'A-Z9' | fold -w 81 | head -n 1` 
 
-// SYSTEM
-sudo nano /etc/dphys-swapfile
-sudo dphys-swapfile setup && sudo dphys-swapfile swapon
-// check architecture
-uname -a
+#SYSTEM
+`sudo nano /etc/dphys-swapfile`  
+`sudo dphys-swapfile setup && sudo dphys-swapfile swapon`  
+check architecture `uname -a`
 
-// PACKAGE MANAGER
-dpkg -l | grep packet
-List all installed packages 
-dpkg-query -l
+#PACKAGE MANAGER
+`dpkg -l | grep packetname`  
+List all installed packages `dpkg-query -l`
 
-//SCREEN
-// create new screen
-screen
-// create new screen with name foo
-screen -S foo
-// to reattach it
-screen -r foo
-// to multi display mode
-screen -x foo
-Ctrl + A then D // detach new screen
-screen -r // get detached screen
+#SCREEN
+create new screen `screen`  
+create new screen with name foo `screen -S foo`  
+to reattach it `screen -r foo`  
+to multi display mode `screen -x foo`  
+`Ctrl + A` then `D` detach new screen  
+get detached screen `screen -r` 
 
-watch -n3600 command args // every hour run command witch args
-watch -n3600 ~/git/rpi_scripts/telegram/tg_send.sh "ETH current blockchain size $(du -sh ~/Library/Ethereum/geth/chaindata)"
-
-// UNKNOWN
-Alias test='apt-get update usw'
-last
+#Watch
+`watch -n3600 command args` every hour run command witch args  
+`watch -n3600 ~/git/rpi_scripts/telegram/tg_send.sh "ETH current blockchain size $(du -sh ~/Library/Ethereum/geth/chaindata)"`  
 
 // PROZESSES
 ps -e | grep minerd
@@ -66,6 +58,8 @@ df -h
 // date sort
 ls -t
 ls -rt
+// under mac os
+mdls foldername // get more info
 
 // FILE REPRESENTAION
 xxd -b filename // show file as binary table
@@ -112,3 +106,7 @@ echo "143.90+86.18+100+10" | bc -l
 
 // STRINGS IN TERMINAL
 grep -r 'balance' mist/
+
+// UNKNOWN
+Alias test='apt-get update usw'
+last
