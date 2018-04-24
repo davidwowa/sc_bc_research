@@ -43,6 +43,35 @@ __Size__
 __TODO: Hex representation in erlang__  
 [HEX in Erlang](http://www.enchantedage.com/hex-format-hash-for-md5-sha1-sha256-and-sha512)  
 
+## Payout example  
+**1.** __Generate keys for Bob, Alice and Eve__  
+`{PublicKeyBOB, PrivKeyOutBOB} = crypto:generate_key(ecdh, crypto:ec_curve(secp521r1)).`  
+`{PublicKeyALICE, PrivKeyOutALICE} = crypto:generate_key(ecdh, crypto:ec_curve(secp521r1)).`  
+`{PublicKeyEVE, PrivKeyOutEVE} = crypto:generate_key(ecdh, crypto:ec_curve(secp521r1)).`  
+`{PublicKeyDAVE, PrivKeyOutDAVE} = crypto:generate_key(ecdh, crypto:ec_curve(secp521r1)).`  
+**2.** __Bob create message, which described transaction__  
+`BOBSignature = crypto:sign(ecdsa, sha512, <<"send 10 coins to ALICE(public key from Alice here)">>, [PrivKeyOutBOB, crypto:ec_curve(secp521r1)]).`  
+Message and Signature are sent in network. All users check following:  
+`crypto:verify(ecdsa, sha512, <<"send 10 coins to ALICE(public key from Alice here)">>, BOBSignature, [PublicKeyBOB, crypto:ec_curve(secp521r1)]).`  
+If result is `true` than send message on next neighbour, if `false` discard message.   
+**3.** __Alice payout (Alice must know the message and signature which created Bob, is important for KYC)__  
+Alice create new message with signature from Bob's, and sent in network.  
+`ALICESignature = crypto:sign(ecdsa, sha512, BOBSignature, [PrivKeyOutALICE, crypto:ec_curve(secp521r1)]).`  
+All users in network check following:  
+`crypto:verify(ecdsa, sha512, BOBSignature, ALICESignature, [PublicKeyALICE, crypto:ec_curve(secp521r1)]).`  
+if result is `true` than send message to next node, if `false` discard message. Checking balances happened also here.  
+__Manipulation__  
+If Eve try to manipulate message, than on following way:  
+    **a.** Manipulate message, and uses Bob's signature  
+    `crypto:verify(ecdsa, sha512, <<"send 10 coins to EVE(public key from Eve here)">>, BOBSignature, [PublicKeyBOB, crypto:ec_curve(secp521r1)]).`  
+    result `false`.  
+    **b.** Create wrong message and signature with help of third account from Dave  
+    `DAVESignature = crypto:sign(ecdsa, sha512, <<"send 10 coins to EVE(public key from Eve here)">>, [PrivKeyOutDAVE, crypto:ec_curve(secp521r1)]).`  
+    `EVESignature = crypto:sign(ecdsa, sha512, DAVESignature, [PrivKeyOutEVE, crypto:ec_curve(secp521r1)]).`  
+    in this case other users muss check:  
+    `crypto:verify(ecdsa, sha512, <<"send 10 coins to EVE(public key from Eve here)">>, DAVESignature, [PublicKeyDAVE, crypto:ec_curve(secp521r1)]).`  
+    but prior muss be known, that on wallet from Dave exists 10 coins, from other transactions or from mining, this work made minders
+
 ## Key file generation with openssl and signing files  
 
 **TODO**: Import for key-files created with openssl.
