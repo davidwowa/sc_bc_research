@@ -91,6 +91,37 @@ Or for readable for humans file use:
 **4.** __Verify signature, message and public key__  
 `openssl dgst -sha512 -verify public_key.pem -signature signature.der message.txt`
 
+## Symetrical crypto for SC`s
+[Derivated from stackoverflow](https://stackoverflow.com/questions/14550195/crypto-between-erlang-and-php?rq=1)  
+__AES__ work with 128 bit blocks, key length is also 128 bit  
+__Blowfish__ work with 64 bit length for key and 128 bit for data  
+__DES(Data encryption standard)__ work with key length 56 bits, and block size 64 bit  
+**1.** __Define your key__  
+__AES__  
+`AESKey = <<1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1>>.` on `bit_size(AESKey).` expected 128.  
+__Blowfish__  
+`BFKey = <<1,1,1,1,1,1,1,1>>.` on `bit_size(BFKey).` expected 64.  
+__DES__  
+`DESKey = <<1,1,1,1,1,1,1,1>>.` on `bit_size(DESKey).` expected 56. In Erlang key must be least 64 bit.    
+**2.** __Define your data__  
+__AES and Blowfish__  
+`AESBFData = <<2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2>>.` on `bit_size(AESBFData).` expected 128.  
+__DES__  
+`DESData = <<2,2,2,2,2,2,2,2>>.` on `bit_size(DESData).` expected 64.  
+**3.** __En- and Decrypt data__  
+__AES__  
+`AESCrypt = crypto:block_encrypt(aes_ecb, AESKey, AESBFData).`  
+`AESDecrypt = crypto:block_decrypt(aes_ecb, AESKey, AESCrypt).`  
+`io:format("AESDecrypt is ~s~n", [AESDecrypt]).`  
+__Blowfish__  
+`BFCrypt = crypto:block_encrypt(blowfish_ecb, BFKey, AESBFData).`  
+`BFDecrypt = crypto:block_decrypt(blowfish_ecb, BFKey, BFCrypt).`  
+`io:format("BFDecrypt is ~s~n", [BFDecrypt]).`  
+__DES__  
+`DESCrypt = crypto:block_encrypt(des_ecb, DESKey, DESData).`  
+`DESDecrypt = crypto:block_decrypt(des_ecb, DESKey, DESCrypt).`  
+`io:format("DESDecrypt is ~s~n", [DESDecrypt]).`  
+
 #Why Erlang?
 [Why Erlang?](https://www.infoq.com/presentations/erlang-java-scala-go-c)  
 [WebPages with Chicago Boss](https://github.com/ChicagoBoss/ChicagoBoss/wiki/Quickstart)  
