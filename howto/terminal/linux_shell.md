@@ -31,23 +31,21 @@ get detached screen `screen -r`
 `watch -n3600 command args` every hour run command witch args  
 `watch -n3600 ~/git/rpi_scripts/telegram/tg_send.sh "ETH current blockchain size $(du -sh ~/Library/Ethereum/geth/chaindata)"`  
 
-// PROZESSES
-ps -e | grep minerd
-tail -f /proc/<pid>/fd/1
+#PROZESSES
+Get more process information `ps -p <pid or proc name> -o pid,vsz=MEMORY -o user,group=GROUP -o comm,args=ARGS`  
+`ps -e | grep minerd`  
+get logs from running process `tail -f /proc/<pid>/fd/1` and `tail -f /proc/'ps -e | grep minerd'/fd/1`  
 
-tail -f /proc/'ps -e | grep minerd'/fd/1
+##VIM
+Select all content in vim : `% y +`  
+Undo `:u`  
+Set line numbers `:set number`  
+Go to linenumber 48 `:48`   
+Go to end of file `Shift G after Esc`  
+Show statusline with line number etc. `:set ruler`  
+Convert between windows and unix `:set ff=unix`  
 
-// VIM
-Select all content in vim : % y +
-:u -> Undo
-set number
-// :48 go to linenumber 48
-// go to end of file Shift G after Esc
-:set ruler
-// convert between windows and unix
-:set ff=unix
-
-// FILES AND FOLDERS
+#FILES AND FOLDERS
 Number of Files in Folder
 ls -l | wc -l
 for file in .[^.]*; do rm "$file"; done
@@ -60,6 +58,14 @@ ls -t
 ls -rt
 // under mac os
 mdls foldername // get more info
+
+#File encoding between dos and unix
+__use other programms__
+`dos2unix FILENAME`  
+`unix2dos FILENAME`  
+__vim__
+`:set ff=unix`  
+`:set ff=dos`
 
 // FILE REPRESENTAION
 xxd -b filename // show file as binary table
