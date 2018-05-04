@@ -19,6 +19,7 @@ rebar3.crashdump
 /rebar.lock
 /rebar3
 /Mnesia.nonode@nohost
+/venv
 <<<<<<< HEAD
 /tmp/
 =======

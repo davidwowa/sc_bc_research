@@ -1,4 +1,4 @@
-Erlang Smart Contract App by Wladimir David Zakrevskyys
+Smart Contract App by Wladimir David Zakrevskyys
 =====
 An OTP application
 ##Install
