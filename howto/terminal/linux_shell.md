@@ -44,6 +44,7 @@ Go to linenumber 48 `:48`
 Go to end of file `Shift G after Esc`  
 Show statusline with line number etc. `:set ruler`  
 Convert between windows and unix `:set ff=unix`  
+Delete line `Shift D`  
 
 #FILES AND FOLDERS
 Number of Files in Folder
