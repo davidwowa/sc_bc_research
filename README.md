@@ -136,10 +136,10 @@ Option ` -base64` is used as standard.
 Option `-k <password>` or `-pass pass:<secret>` use this password.
 Option `-P` show salt, key and iv. 
 
-**1.** __Encode File__  
+**1.** __Encode File__ base64 encoding is used as default  
 `openssl aes-256-cbc -a -salt -in secrets.txt -out secrets.txt.enc`  
 without file  
-`echo "secret" | openssl aes-256-cbc -e -a`  
+`echo "secret" | openssl aes-256-cbc -base64 -e -a`  
 
 **2.** __Decode File__  
 `openssl aes-256-cbc -d -a -in secrets.txt.enc -out secrets.txt.new`  
