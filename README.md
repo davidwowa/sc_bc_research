@@ -146,6 +146,11 @@ without file
 without file  
 `echo "U2FsdGVkX18gmZMWMGJncmUi+jXPNR3FwYumYvrd5pQ=" | openssl aes-256-cbc -d -a`
 
+##For analysis  
+- [ ] (Шифрование по ГОСТу, Магма)[https://xakep.ru/2018/05/10/working-with-magma/]  
+- [ ] (Кузнечик ГОСТ 34.12)[https://xakep.ru/2017/02/02/working-with-grasshopper/]  
+- [ ] (Хаш по ГОСТ 34.11)[https://xakep.ru/2016/07/20/hash-gost-34-11-2012/]  
+
 #Why Erlang?
 [Why Erlang?](https://www.infoq.com/presentations/erlang-java-scala-go-c)  
 [WebPages with Chicago Boss](https://github.com/ChicagoBoss/ChicagoBoss/wiki/Quickstart)  
