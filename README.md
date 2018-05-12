@@ -10,17 +10,11 @@ An OTP application
 
 ##Docker
 **1.** __Build container__  
-`
-docker build --build-arg password=pass --no-cache=true -t debian:erlang1 .
-`  
+`docker build --build-arg password=pass --no-cache=true -t debian:erlang1 .`  
 **2.** __Create network__  
-`
-docker network create testnetwork
-`  
+`docker network create testnetwork`  
 **3.** __Run container__  
-`
-docker run -ti -p 5555:5555 --name bc --net testnetwork debian:erlang1
-`  
+`docker run -ti -p 5555:5555 --name bc --net testnetwork debian:erlang1`  
 
 ## Key generation in erlang
 
@@ -145,6 +139,12 @@ without file
 `openssl aes-256-cbc -d -a -in secrets.txt.enc -out secrets.txt.new`  
 without file  
 `echo "U2FsdGVkX18gmZMWMGJncmUi+jXPNR3FwYumYvrd5pQ=" | openssl aes-256-cbc -d -a`
+
+## Use certificates and fingerprints  
+
+__TODO__  
+First steps...  
+`openssl req -newkey rsa:2048 -out request.pem -keyout pub-sec-key.pem`  
 
 ##For analysis  
 - [ ] (Шифрование по ГОСТу, Магма)[https://xakep.ru/2018/05/10/working-with-magma/]  
