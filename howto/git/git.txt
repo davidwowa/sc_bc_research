@@ -24,3 +24,7 @@ git config --global core.autocrlf true
 
 // show difference to master
 `git diff`
+
+// change remote
+git remote -v
+git remote set-url origin https://github.com/davidwowa/433Utils.git
