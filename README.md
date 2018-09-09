@@ -1,4 +1,4 @@
-Smart Contract App by Wladimir David Zakrevskyys
+Smart Contract App
 =====
 An OTP application
 ##Install
